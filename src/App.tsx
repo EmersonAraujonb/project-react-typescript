@@ -1,20 +1,14 @@
-import { ThemeProvider } from '@mui/material';
-import React from 'react';
-import { BrowserRouter} from "react-router-dom";
-import { LightTheme} from './shared/themes'
-import { AppRoutes } from './routes';
-
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "./routes";
+import { AppThemeProvider } from "./shared/contexts/ThemeContext";
 
 function App() {
   return (
-    <ThemeProvider theme={LightTheme}>
-       <BrowserRouter>
-      <div className="App">
-      <AppRoutes/> 
-      </div>
+    <AppThemeProvider >
+      <BrowserRouter>
+          <AppRoutes />
       </BrowserRouter>
-    </ThemeProvider>
-   
+    </AppThemeProvider>
   );
 }
 
