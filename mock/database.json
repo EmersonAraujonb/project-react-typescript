@@ -2,8 +2,10 @@
     "pessoas": [
         {
             "id": 1,
-            "nome": "Emerson",
-            "sobrenome": "Araújo"
+            "email": "emersonaraujo@gmail.com",
+            "cidadeId": "Barreiras",
+            "nomeCompleto": "Emerson dos Santos Araujo"
+
         }
     ]
 }
