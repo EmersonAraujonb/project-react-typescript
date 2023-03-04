@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FerramentasDaListagem } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
 import {
@@ -8,6 +8,8 @@ import {
 } from '../../shared/services/api/pessoas/PessoasService';
 import { useDebounce } from '../../shared/hooks';
 import {
+  Icon,
+  IconButton,
   LinearProgress,
   Pagination,
   Paper,
@@ -27,6 +29,7 @@ export const ListagemDePessoas: React.FC = () => {
   const [rows, setRows] = useState<IListagemPessoa[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const busca = useMemo(() => {
     return searchParams.get('busca') || '';
@@ -41,18 +44,31 @@ export const ListagemDePessoas: React.FC = () => {
     debounce(() => {
       PessoasService.getAll(pagina, busca).then((result) => {
         setIsLoading(false);
-
         if (result instanceof Error) {
           alert(result.message);
         } else {
-          console.log(result);
           setRows(result.data);
+          console.log(result);
           setTotalCount(result.totalCount);
         }
       });
     });
   }, [busca, pagina]);
 
+  const handleDelete = (id: string) => {
+    if (confirm('Realmente deseja apagar?')) {
+      PessoasService.deleteById(id).then((result) => {
+        if (result instanceof Error) {
+          alert(result.message);
+        } else {
+          setRows((oldRows) => [
+            ...oldRows.filter((oldRows) => oldRows.id !== id),
+          ]);
+          alert('Registro apagado com sucesso!');
+        }
+      });
+    }
+  };
   return (
     <LayoutBaseDePagina
       titulo='Listagem de pessoas'
@@ -60,6 +76,7 @@ export const ListagemDePessoas: React.FC = () => {
         <FerramentasDaListagem
           mostrarInputBusca
           textoBotaoNovo='Nova'
+          aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
           textoDaBusca={busca}
           aoMudarTextoDeBusca={(texto) =>
             setSeachParams({ busca: texto, pagina: '1' }, { replace: true })
@@ -75,17 +92,27 @@ export const ListagemDePessoas: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Ações</TableCell>
               <TableCell>Nome Completo</TableCell>
               <TableCell>Email</TableCell>
+              <TableCell>Apagar | Editar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.nomeCompleto}</TableCell>
+                <TableCell>{row.fullName}</TableCell>
                 <TableCell>{row.email}</TableCell>
+                <TableCell>
+                  <IconButton size='small' onClick={() => handleDelete(row.id)}>
+                    <Icon>delete</Icon>
+                  </IconButton>
+                  <IconButton
+                    size='small'
+                    onClick={() => navigate(`/pessoas/detalhe/${row.id}`)}
+                  >
+                    <Icon>edit</Icon>
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -97,11 +124,11 @@ export const ListagemDePessoas: React.FC = () => {
             {isLoading && (
               <TableRow>
                 <TableCell colSpan={3}>
-                  <LinearProgress variant='indeterminate' />
+                  <LinearProgress variant='indeterminate' color='secondary' />
                 </TableCell>
               </TableRow>
             )}
-            {totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS && (
+            {totalCount > 0 && totalCount &&  Environment.LIMITE_DE_LINHAS && (
               <TableRow>
                 <TableCell colSpan={3}>
                   <Pagination

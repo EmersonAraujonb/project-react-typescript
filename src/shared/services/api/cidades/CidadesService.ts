@@ -1,31 +1,29 @@
 import { Environment } from '../../../environment';
 import { Api } from '../axios-config';
 
-export interface IListagemPessoa {
+export interface IListagemCidade {
   id: string;
-  fullName: string;
-  email: string;
   city: string;
+  state: string;
 }
-export interface IDetalhePessoa {
+export interface IDetalheCidade {
   id: string;
-  fullName: string;
-  email: string;
   city: string;
+  state: string;
 }
 
-type TPessoasComTotalCount = {
-  data: IListagemPessoa[];
+type TCidadesComTotalCount = {
+  data: IListagemCidade[];
   totalCount: number;
 };
 
 const getAll = async (
   page = 1,
   search = ''
-): Promise<TPessoasComTotalCount | Error> => {
+): Promise<TCidadesComTotalCount | Error> => {
   try {
-    const result = await Api.get('/peoples');
-    const urlRelativa = `/peoples?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&search=${search}`;
+    const result = await Api.get('/cities');
+    const urlRelativa = `/cities?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&search=${search}`;
     const { data, headers } = await Api.get(urlRelativa);
     if (data) {
       return {
@@ -42,9 +40,9 @@ const getAll = async (
   }
 };
 
-const getById = async (id: string): Promise<IDetalhePessoa | Error> => {
+const getById = async (id: string): Promise<IDetalheCidade | Error> => {
   try {
-    const { data } = await Api.patch(`/peoples/${id}`);
+    const { data } = await Api.patch(`/cities/${id}`);
     if (data) {
       return data;
     }
@@ -58,10 +56,10 @@ const getById = async (id: string): Promise<IDetalhePessoa | Error> => {
 };
 
 const create = async (
-  dados: Omit<IDetalhePessoa, 'id'>
+  dados: Omit<IDetalheCidade, 'id'>
 ): Promise<string | Error> => {
   try {
-    const { data } = await Api.post<IDetalhePessoa>('/peoples', dados);
+    const { data } = await Api.post<IDetalheCidade>('/cities', dados);
     if (data) {
       console.log(data);
       return data.id;
@@ -76,10 +74,10 @@ const create = async (
 
 const updateById = async (
   id: string,
-  dados: IDetalhePessoa
+  dados: IDetalheCidade
 ): Promise<void | Error> => {
   try {
-    const { data } = await Api.patch(`/peoples/${id}`, dados);
+    const { data } = await Api.patch(`/cities/${id}`, dados);
     if (data) {
       console.log(data);
       return data;
@@ -94,7 +92,7 @@ const updateById = async (
 
 const deleteById = async (id: string): Promise<void | Error> => {
   try {
-    await Api.delete(`/peoples/${id}`);
+    await Api.delete(`/cities/${id}`);
   } catch (error) {
     console.error(error);
     return new Error(
@@ -103,7 +101,7 @@ const deleteById = async (id: string): Promise<void | Error> => {
   }
 };
 
-export const PessoasService = {
+export const CidadesService = {
   getAll,
   getById,
   create,

@@ -45,7 +45,7 @@ export const FerramentasDaListagem: React.FC<IBarraDeFerramentasProps> = ({
         {mostrarBotaoNovo && (
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             disableElevation
             endIcon={<Icon>add</Icon>}
             onClick={aoClicarEmNovo}

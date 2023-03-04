@@ -70,7 +70,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       {mostrarBotaoSalvar && !mostrarBotaoSalvarCarregando && (
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           disableElevation
           onClick={aoClicarEmSalvar}
           startIcon={<Icon>save</Icon>}
@@ -90,7 +90,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       {mostrarBotaoSalvarEFechar && !mostrarBotaoSalvarEFecharCarregando && !smDown && !mdDown && (
         <Button
           variant="outlined"
-          color="primary"
+          color="secondary"
           disableElevation
           onClick={aoClicarEmSalvarEFechar}
           startIcon={<Icon>save</Icon>}
@@ -111,7 +111,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       {mostrarBotaoApagar && !mostrarBotaoApagarCarregando && (
         <Button
           variant="outlined"
-          color="primary"
+          color="secondary"
           disableElevation
           onClick={aoClicarEmApagar}
           startIcon={<Icon>delete</Icon>}
@@ -130,7 +130,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       {mostrarBotaoNovo && !mostrarBotaoNovoCarregando && !smDown && !mdDown && (
         <Button
           variant="outlined"
-          color="primary"
+          color="secondary"
           disableElevation
           onClick={aoClicarEmNovo}
           startIcon={<Icon>add</Icon>}
@@ -154,7 +154,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       {mostrarBotaoVoltar && !mostrarBotaoVoltarCarregando && (
         <Button
           variant="outlined"
-          color="primary"
+          color="secondary"
           disableElevation
           onClick={aoClicarEmVoltar}
           startIcon={<Icon>arrow_back</Icon>}
