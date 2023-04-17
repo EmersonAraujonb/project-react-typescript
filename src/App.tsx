@@ -3,7 +3,7 @@ import './shared/forms/TraducoesYup';
 import { AppRoutes } from './routes';
 import { MenuLateral } from './shared/components';
 import { DrawerProvider } from './shared/contexts';
-import { AppThemeProvider } from './shared/contexts';
+import { ThemeContextProvider } from './shared/contexts';
 import { AuthGoogleProvider } from './shared/contexts/AuthGoogle';
 import Welcome from './shared/components/welcome/Welcome';
 
@@ -11,7 +11,7 @@ function App() {
   
   return (
     <AuthGoogleProvider>
-      <AppThemeProvider >
+      <ThemeContextProvider >
         <DrawerProvider>
           <BrowserRouter>
             <MenuLateral>
@@ -20,7 +20,7 @@ function App() {
             </MenuLateral>
           </BrowserRouter>
         </DrawerProvider>
-      </AppThemeProvider>
+      </ThemeContextProvider>
     </AuthGoogleProvider>
   );
 }

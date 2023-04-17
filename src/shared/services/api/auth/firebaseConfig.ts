@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDQHqUcWtUJYGm3I3JE1svIOwSEARL0xqs',
-  authDomain: 'cadastro-37800.firebaseapp.com',
-  projectId: 'cadastro-37800',
-  storageBucket: 'cadastro-37800.appspot.com',
-  messagingSenderId: '907154965374',
-  appId: '1:907154965374:web:d637d6b030df2e7afba92f',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId:process.env.APP_ID,
 };
 
 export const app = initializeApp(firebaseConfig);

@@ -1,4 +1,3 @@
-import { Logout } from '@mui/icons-material';
 import {
   Avatar,
   Divider,
@@ -15,7 +14,7 @@ import {
 import { Box } from '@mui/system';
 import { useContext } from 'react';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
-import { useAppThemeContext, useDrawerContext } from '../../contexts';
+import { useDrawerContext } from '../../contexts';
 import { AuthGoogleContext } from '../../contexts/AuthGoogle';
 
 interface IChildren {
@@ -44,7 +43,7 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
 
   return (
     <List component='nav'>
-      <ListItemButton selected={!!match} onClick={handleClick}>
+      <ListItemButton  selected={!!match} onClick={handleClick}>
         <ListItemIcon>
           <Icon>{icon}</Icon>
         </ListItemIcon>

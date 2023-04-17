@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useContext, useEffect, useState } from 'react';
-import { useAppThemeContext, useDrawerContext } from '../contexts';
+import { useThemeContext, useDrawerContext } from '../contexts';
 import { AuthGoogleContext } from '../contexts/AuthGoogle';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -110,8 +110,7 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const theme = useTheme();
   const { signOut }: any = useContext(AuthGoogleContext);
-  const { toggleTheme } = useAppThemeContext();
-
+  const { changeTheme } = useThemeContext();
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
   const [image, setImage] = useState('');
@@ -119,6 +118,7 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
   const userLogado = JSON.parse(dados);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const active = localStorage.getItem('theme');
 
   const { toggleDrawerOpen } = useDrawerContext();
 
@@ -136,6 +136,10 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  function toggleButton() : boolean | undefined {
+    if(active === 'dark') return true;
+    return false;
+  }
 
   return (
     <Box height='100%' display='flex' flexDirection='column' gap={1}>
@@ -162,7 +166,8 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
         </Typography>
         <Box display='flex'>
           <FormControlLabel
-            onClick={toggleTheme}
+            checked={toggleButton()}
+            onClick={changeTheme}
             sx={{ display: 'flex', margin: -3}}
             control={<MaterialUISwitch sx={{ m: 1 }} />}
             label=''

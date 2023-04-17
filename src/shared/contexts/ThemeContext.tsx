@@ -1,54 +1,41 @@
-import React, { useEffect } from 'react';
-import { ThemeProvider } from '@mui/material';
+import React from 'react';
+import { Box, ThemeProvider } from '@mui/material';
 import { DarkTheme, LightTheme } from '../../shared/themes';
-import { Box } from '@mui/system';
+import { useContext, useState } from 'react';
 
 interface IThemeContextData {
   children?: React.ReactNode;
-  themeName?: 'Light' | 'Dark';
-  toggleTheme?: () => void;
+  isDarkTheme?: string;  
+  setIsDarkTheme?: any;
 }
 
 const ThemeContext = React.createContext({} as IThemeContextData);
 
-export const useAppThemeContext = () => {
-  return React.useContext(ThemeContext);
-};
-export const AppThemeProvider: React.FC<IThemeContextData> = ({
-  children,
-}: {
-  children?: React.ReactNode;
-}) => {
-  const [themeName, setThemeName] = React.useState<'Light' | 'Dark'>('Light');
-  const toggleTheme = React.useCallback(() => {
-    setThemeName((oldThemeName) =>
-      oldThemeName === 'Light' ? 'Dark' : 'Light'
-    );
-   
-  }, []);
-  useEffect(() => {
-    localStorage.setItem('theme', themeName);
-  }, [toggleTheme, themeName]);
- 
-  const themeLocalStorage = localStorage.getItem('theme');
+export const ThemeContextProvider: React.FC<IThemeContextData>  = ({ children }) => {
 
+  const [isDarkTheme, setIsDarkTheme] = useState(() => {
+    const theme = localStorage.getItem('theme');
 
-  const theme = React.useMemo(() => {
-    if (themeName === 'Light') return LightTheme;
-    return DarkTheme;
-  }, [themeName]);
-  // console.log(LightTheme);
-  // localStorage.setItem('theme', themeName);
-  
-
+    if (theme === 'dark') {
+      return 'dark';
+    } else {
+      return 'light';
+    }
+    
+  });
+  const themes = React.useMemo(() => {
+    if (isDarkTheme === 'dark') return DarkTheme;
+    return LightTheme;
+  }, [isDarkTheme]);
 
   return (
-    <ThemeContext.Provider value={{ themeName, toggleTheme }}>
-      <ThemeProvider theme={theme}>
+    <ThemeContext.Provider value={{ isDarkTheme, setIsDarkTheme }}>
+			
+      <ThemeProvider theme={isDarkTheme === 'dark' ? DarkTheme : LightTheme}>
         <Box
           width="100vw"
           height="100vh"
-          bgcolor={theme.palette.background.default}
+          bgcolor={themes.palette.background.default}
         >
           {children}
         </Box>
@@ -56,3 +43,25 @@ export const AppThemeProvider: React.FC<IThemeContextData> = ({
     </ThemeContext.Provider>
   );
 };
+
+export const useThemeContext = () => {
+
+  const { isDarkTheme, setIsDarkTheme } = useContext(ThemeContext);
+
+  function changeTheme() {
+    if (isDarkTheme === 'dark') {
+      setIsDarkTheme('light');
+      localStorage.setItem('theme', 'light');
+
+    }
+    if (isDarkTheme === 'light') {
+      setIsDarkTheme('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  return {
+    changeTheme
+  };
+};
+
