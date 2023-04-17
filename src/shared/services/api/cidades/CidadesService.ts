@@ -24,11 +24,11 @@ const getAll = async (
   try {
     const result = await Api.get('/cities');
     const urlRelativa = `/cities?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&search=${search}`;
-    const { data, headers } = await Api.get(urlRelativa);
+    const { data } = await Api.get(urlRelativa);
     if (data) {
       return {
         data,
-        totalCount: Number(headers['totalCount'] || result.data.length),
+        totalCount: result.data.length,
       };
     }
     return new Error('Erro ao listar os registros!');

@@ -5,7 +5,7 @@ export interface IListagemPessoa {
   id: string;
   fullName: string;
   email: string;
-  city: string;
+  // city: string;
 }
 export interface IDetalhePessoa {
   id: string;
@@ -20,17 +20,17 @@ type TPessoasComTotalCount = {
 };
 
 const getAll = async (
-  page = 1,
+  page= 10,
   search = ''
 ): Promise<TPessoasComTotalCount | Error> => {
   try {
     const result = await Api.get('/peoples');
     const urlRelativa = `/peoples?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&search=${search}`;
-    const { data, headers } = await Api.get(urlRelativa);
+    const { data } = await Api.get(urlRelativa);
     if (data) {
       return {
         data,
-        totalCount: Number(headers['totalCount'] || result.data.length),
+        totalCount: result.data.length,
       };
     }
     return new Error('Erro ao listar os registros!');

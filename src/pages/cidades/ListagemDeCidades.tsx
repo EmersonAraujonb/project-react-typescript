@@ -3,9 +3,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FerramentasDaListagem } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
 import {
-  IListagemPessoa,
-  PessoasService,
-} from '../../shared/services/api/pessoas/PessoasService';
+  IListagemCidade,
+  CidadesService,
+} from '../../shared/services/api/cidades/CidadesService';
 import { useDebounce } from '../../shared/hooks';
 import {
   Alert,
@@ -30,26 +30,27 @@ import {
   TableHead,
   TableRow,
   Theme,
-  Typography,
-  useMediaQuery
+  useMediaQuery,
 } from '@mui/material';
 import { Environment } from '../../shared/environment';
 
-export interface Estado extends SnackbarOrigin {
+export interface State extends SnackbarOrigin {
   open: boolean;
 }
-export const ListagemDePessoas: React.FC = () => {
+
+export const ListagemDeCidades: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
-  const [rows, setRows] = useState<IListagemPessoa[]>([]);
+  const [rows, setRows] = useState<IListagemCidade[]>([]);
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [openError, setOpenError] = useState(false);
   const [openErrorConexao, setOpenErrorConexao] = useState(false);
-  const [state, setState] = useState<Estado>({
+  const [openDialog, setOpenDialog] = useState(false);
+  const [state, setState] = useState<State>({
     open: false,
     vertical: 'top',
     horizontal: 'right',
@@ -67,17 +68,13 @@ export const ListagemDePessoas: React.FC = () => {
   useEffect(() => {
     setIsLoading(true);
     debounce(() => {
-      PessoasService.getAll(pagina, busca).then((result) => {
+      CidadesService.getAll(pagina, busca).then((result) => {
         setIsLoading(false);
         if (result instanceof Error) {
           setOpenErrorConexao(true);
         } else {
           setRows(result.data);
           setTotalCount(result.totalCount);
-          console.log('rows',rows);
-          console.log('result',result.totalCount);
-          console.log(busca);
-          console.log(pagina);
         }
       });
     });
@@ -85,7 +82,7 @@ export const ListagemDePessoas: React.FC = () => {
 
   const handleDelete = (id: string, newState: SnackbarOrigin) => {
     setOpenDialog(true);
-    PessoasService.deleteById(id).then((result) => {
+    CidadesService.deleteById(id).then((result) => {
       if (result instanceof Error) {
         setOpenError(true);
         setOpenDialog(false);
@@ -121,10 +118,6 @@ export const ListagemDePessoas: React.FC = () => {
 
     setOpenErrorConexao(false);
   };
-  
-  
-
-  const [openDialog, setOpenDialog] = useState(false);
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -134,18 +127,14 @@ export const ListagemDePessoas: React.FC = () => {
     setOpenDialog(false);
   };
 
-
-
-
-
   return (
     <LayoutBaseDePagina
-      titulo='Listagem de pessoas'
+      titulo='Listagem de Cidades'
       barraDeFerramentas={
         <FerramentasDaListagem
           mostrarInputBusca
           textoBotaoNovo='Nova'
-          aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
+          aoClicarEmNovo={() => navigate('/cidades/detalhe/nova')}
           textoDaBusca={busca}
           aoMudarTextoDeBusca={(texto) =>
             setSearchParams({ busca: texto, pagina: '1' }, { replace: true })
@@ -155,12 +144,12 @@ export const ListagemDePessoas: React.FC = () => {
     >
       <Snackbar  key={vertical + horizontal}  anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={6000} onClose={handleCloseSuccess}>
         <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Usuário deletado com sucesso!
+          Cidade deletada com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao apagar usuário!
+          Erro ao apagar cidade!
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorConexao} autoHideDuration={6000} onClose={handleCloseErrorConexao} anchorOrigin={{vertical, horizontal}}>
@@ -168,7 +157,6 @@ export const ListagemDePessoas: React.FC = () => {
           Erro de conexão!
         </Alert>
       </Snackbar>
-      
       <TableContainer
         component={Paper}
         variant='outlined'
@@ -177,37 +165,17 @@ export const ListagemDePessoas: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              
-              <TableCell
-                width={100}
-               
-              >
-                Nome Completo
-              </TableCell>
-              <TableCell
-                width={100}
-                
-              >
-                Email
-              </TableCell>
-              <TableCell
-                width={100}
-              
-              >
-                Açoẽs
-              </TableCell>
+              <TableCell >Cidade</TableCell>
+              <TableCell >Estado</TableCell>
+              <TableCell >Açoẽs</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.id} >
+              <TableRow key={row.id}>
                 
-                <TableCell>
-                  {row.fullName}
-                </TableCell>
-                <TableCell >
-                  {row.email}
-                </TableCell>
+                <TableCell >{row.city}</TableCell>
+                <TableCell >{row.state}</TableCell>
                 <TableCell>
                   <Dialog
                     open={openDialog}
@@ -215,7 +183,7 @@ export const ListagemDePessoas: React.FC = () => {
                     aria-labelledby="responsive-dialog-title"
                   >
                     <DialogTitle id="responsive-dialog-title">
-                      {'Deseja excluir este usuário?'}
+                      {'Deseja excluir esta cidade?'}
                     </DialogTitle>
                     <DialogContent>
                       <DialogContentText>
@@ -234,7 +202,7 @@ export const ListagemDePessoas: React.FC = () => {
                   <IconButton
                     size='small'
                     color='inherit'
-                    onClick={() => navigate(`/pessoas/detalhe/${row.id}`)}
+                    onClick={() => navigate(`/cidades/detalhe/${row.id}`)}
                   >
                     <Icon fontSize={smDown ? 'small' : 'medium'} color='primary'>edit</Icon>
                   </IconButton>
@@ -242,8 +210,6 @@ export const ListagemDePessoas: React.FC = () => {
                   <IconButton onClick={handleClickOpen} size='small' >
                     <Icon color='error' fontSize={smDown ? 'small' : 'medium'}>delete_forever</Icon>
                   </IconButton>
-                  
-                  
                 </TableCell>
               </TableRow>
             ))}
@@ -251,7 +217,6 @@ export const ListagemDePessoas: React.FC = () => {
           {totalCount === 0 && !isLoading && (
             <caption> {Environment.LISTAGEM_VAZIA}</caption>
           )}
-
           <TableFooter>
             {isLoading && (
               <TableRow>
@@ -261,8 +226,8 @@ export const ListagemDePessoas: React.FC = () => {
               </TableRow>
             )}
             {totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS && (
-              <TableRow>
-                <TableCell colSpan={3}>
+              <TableRow >
+                <TableCell colSpan={3} >
                   <Pagination
                     color="secondary"
                     variant="outlined"
@@ -271,7 +236,7 @@ export const ListagemDePessoas: React.FC = () => {
                     count={Math.ceil(totalCount / Environment.LIMITE_DE_LINHAS)}
                     onChange={(_, newPage) =>
                       setSearchParams(
-                        { busca, pagina: newPage.toString() },
+                        { busca, pagina: newPage.toString(),  },
                         { replace: true }
                       )
                     }

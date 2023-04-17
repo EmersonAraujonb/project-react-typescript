@@ -1,3 +1,4 @@
+import { Logout } from '@mui/icons-material';
 import {
   Avatar,
   Divider,
@@ -7,12 +8,15 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import { useContext } from 'react';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import { useAppThemeContext, useDrawerContext } from '../../contexts';
+import { AuthGoogleContext } from '../../contexts/AuthGoogle';
 
 interface IChildren {
   children?: React.ReactNode;
@@ -39,7 +43,7 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
   };
 
   return (
-    <List component="nav">
+    <List component='nav'>
       <ListItemButton selected={!!match} onClick={handleClick}>
         <ListItemIcon>
           <Icon>{icon}</Icon>
@@ -54,59 +58,71 @@ export const MenuLateral: React.FC<IChildren> = ({ children }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
-  const {toggleTheme} = useAppThemeContext();
+  const dados: any = sessionStorage.getItem('User');
+  const { signOut }: any = useContext(AuthGoogleContext);
+  const image = '../../../logo.png';
+
   return (
     <>
-      <Drawer
-        open={isDrawerOpen}
-        variant={smDown ? 'temporary' : 'permanent'}
-        onClose={toggleDrawerOpen}
-      >
-        <Box
-          width={theme.spacing(28)}
-          height="100%"
-          display="flex"
-          flexDirection="column"
+      {dados && (
+        <Drawer
+          open={isDrawerOpen}
+          variant={smDown ? 'temporary' : 'permanent'}
+          onClose={toggleDrawerOpen}
         >
           <Box
-            width="100%"
-            height={theme.spacing(20)}
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
+            width={theme.spacing(28)}
+            height='100%'
+            display='flex'
+            flexDirection='column'
           >
-            <Avatar
-              sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-              src="https://yt3.ggpht.com/ytc/AMLnZu9T1s3YzFElHEfikSQm3XnaywMvqiVlHy7_LY8PJQ=s88-c-k-c0x00ffffff-no-rj-mo"
-            />
+            <Box
+              width='100%'
+              display='flex'
+              alignItems='center'
+              justifyContent={'center'}
+            >
+              <Avatar
+                sx={
+                  { height: theme.spacing(12), width: theme.spacing(12), marginTop: theme.spacing(1)}
+                }
+                src={image}
+              />
+              <Typography variant='overline' fontSize={14} fontWeight={900}>Web Cadastro</Typography>
+            </Box>
+            <Divider sx={{marginTop:1}} />
+            <Box flex={1}>
+              <List component='nav'>
+                {drawerOptions?.map((drawerOption) => (
+                  <ListItemLink
+                    key={drawerOption.path}
+                    icon={drawerOption.icon}
+                    label={drawerOption.label}
+                    to={drawerOption.path}
+                    onClick={smDown ? toggleDrawerOpen : undefined}
+                  />
+                ))}
+              </List>
+            </Box>
+            <Divider />
+            <Box>
+              <List component='nav'>
+                <Typography
+                  variant='body2'
+                  color='text.secondary'
+                  align='center'
+                  lineHeight='2rem'
+                >
+                  {' © '}
+                  {new Date().getFullYear()}
+                  {' Web Cadastro'}
+                </Typography>
+              </List>
+            </Box>
           </Box>
-          <Divider />
-          <Box flex={1}>
-            <List component="nav">
-              {drawerOptions?.map((drawerOption) => (
-                <ListItemLink
-                  key={drawerOption.path}
-                  icon={drawerOption.icon}
-                  label={drawerOption.label}
-                  to={drawerOption.path}
-                  onClick={smDown ? toggleDrawerOpen : undefined}
-                />
-              ))}
-            </List>
-          </Box>
-          <Box>
-            <List component="nav">
-              <ListItemButton  onClick={toggleTheme}>
-                <ListItemIcon>
-                  <Icon>dark_mode</Icon>
-                </ListItemIcon>
-                <ListItemText primary='Alternar tema' />
-              </ListItemButton>
-            </List>
-          </Box>
-        </Box>
-      </Drawer>
-      <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(28)}>
+        </Drawer>
+      )}
+      <Box height='100vh' marginLeft={smDown ? 0 : theme.spacing(28)}>
         {children}
       </Box>
     </>

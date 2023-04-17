@@ -4,18 +4,24 @@ import { AppRoutes } from './routes';
 import { MenuLateral } from './shared/components';
 import { DrawerProvider } from './shared/contexts';
 import { AppThemeProvider } from './shared/contexts';
+import { AuthGoogleProvider } from './shared/contexts/AuthGoogle';
+import Welcome from './shared/components/welcome/Welcome';
 
 function App() {
+  
   return (
-    <AppThemeProvider>
-      <DrawerProvider>
-        <BrowserRouter>
-          <MenuLateral>
-            <AppRoutes />
-          </MenuLateral>
-        </BrowserRouter>
-      </DrawerProvider>
-    </AppThemeProvider>
+    <AuthGoogleProvider>
+      <AppThemeProvider >
+        <DrawerProvider>
+          <BrowserRouter>
+            <MenuLateral>
+              <Welcome/>
+              <AppRoutes />
+            </MenuLateral>
+          </BrowserRouter>
+        </DrawerProvider>
+      </AppThemeProvider>
+    </AuthGoogleProvider>
   );
 }
 

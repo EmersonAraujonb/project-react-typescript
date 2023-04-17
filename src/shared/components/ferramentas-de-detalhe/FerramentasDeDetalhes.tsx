@@ -69,6 +69,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
     >
       {mostrarBotaoSalvar && !mostrarBotaoSalvarCarregando && (
         <Button
+          size={smDown? 'small' :'medium'}
           variant="contained"
           color="secondary"
           disableElevation
@@ -80,6 +81,8 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             whiteSpace="nowrap"
             textOverflow="ellipsis"
             overflow="hidden"
+            fontSize={smDown ? 8 : mdDown ? 12 : 14}
+
           >
             Salvar
           </Typography>
@@ -89,6 +92,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       {mostrarBotaoSalvarCarregando && <Skeleton width={110} height={60} />}
       {mostrarBotaoSalvarEFechar && !mostrarBotaoSalvarEFecharCarregando && !smDown && !mdDown && (
         <Button
+          size={smDown? 'small' :'medium'}
           variant="outlined"
           color="secondary"
           disableElevation
@@ -100,6 +104,8 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             whiteSpace="nowrap"
             textOverflow="ellipsis"
             overflow="hidden"
+            fontSize={smDown ? 8 : mdDown ? 12 : 14}
+
           >
             Salvar e fechar
           </Typography>
@@ -110,6 +116,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       )}
       {mostrarBotaoApagar && !mostrarBotaoApagarCarregando && (
         <Button
+          size={smDown? 'small' :'medium'}
           variant="outlined"
           color="secondary"
           disableElevation
@@ -121,6 +128,8 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             whiteSpace="nowrap"
             textOverflow="ellipsis"
             overflow="hidden"
+            fontSize={smDown ? 8 : mdDown ? 12 : 14}
+
           >
             Apagar
           </Typography>
@@ -129,6 +138,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       {mostrarBotaoApagarCarregando && <Skeleton width={110} height={60} />}
       {mostrarBotaoNovo && !mostrarBotaoNovoCarregando && !smDown && !mdDown && (
         <Button
+          size={smDown? 'small' :'medium'}          
           variant="outlined"
           color="secondary"
           disableElevation
@@ -140,6 +150,8 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             whiteSpace="nowrap"
             textOverflow="ellipsis"
             overflow="hidden"
+            fontSize={smDown ? 8 : mdDown ? 12 : 14}
+
           >
             {textoBotaoNovo}
           </Typography>
@@ -153,6 +165,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
       )}
       {mostrarBotaoVoltar && !mostrarBotaoVoltarCarregando && (
         <Button
+          size={smDown? 'small' :'medium'}
           variant="outlined"
           color="secondary"
           disableElevation
@@ -164,6 +177,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             whiteSpace="nowrap"
             textOverflow="ellipsis"
             overflow="hidden"
+            fontSize={smDown ? 8 : mdDown ? 12 : 14}
           >
             Voltar
           </Typography>

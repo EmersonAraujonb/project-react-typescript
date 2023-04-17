@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material';
 import { DarkTheme, LightTheme } from '../../shared/themes';
 import { Box } from '@mui/system';
@@ -24,12 +24,23 @@ export const AppThemeProvider: React.FC<IThemeContextData> = ({
     setThemeName((oldThemeName) =>
       oldThemeName === 'Light' ? 'Dark' : 'Light'
     );
+   
   }, []);
+  useEffect(() => {
+    localStorage.setItem('theme', themeName);
+  }, [toggleTheme, themeName]);
+ 
+  const themeLocalStorage = localStorage.getItem('theme');
+
 
   const theme = React.useMemo(() => {
     if (themeName === 'Light') return LightTheme;
     return DarkTheme;
   }, [themeName]);
+  // console.log(LightTheme);
+  // localStorage.setItem('theme', themeName);
+  
+
 
   return (
     <ThemeContext.Provider value={{ themeName, toggleTheme }}>

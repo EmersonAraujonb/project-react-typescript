@@ -6,28 +6,25 @@ import * as yup from 'yup';
 import { FerramentasDeDetalhes } from '../../shared/components';
 import { VTextField, VForm, useVForm, IVFormErrors } from '../../shared/forms';
 import { LayoutBaseDePagina } from '../../shared/layouts';
-import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
-import { AutoCompleteCidade } from './components/AutoCompleteCidade';
+import { CidadesService } from '../../shared/services/api/cidades/CidadesService';
 
 interface IFormData {
-  email: string;
-  fullName: string;
   city: string;
+  state: string;
 }
 const formValidationSchema: yup.ObjectSchema<IFormData> = yup.object().shape({
-  fullName: yup.string().required().min(3),
-  email: yup.string().required().email(),
   city: yup.string().required(),
+  state: yup.string().required(),
 });
-export interface StateDetalhePessoa extends SnackbarOrigin {
+export interface StateDetalheCidade extends SnackbarOrigin {
   open: boolean;
 }
 
-export const DetalheDePessoas: React.FC = () => {
+export const DetalheDeCidades: React.FC = () => {
   const { id = 'nova' } = useParams<'id'>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [nome, setNome] = useState('');
+  const [city, setCity] = useState('');
   const { formRef, save, saveAndClose, isSaveAndClose } = useVForm();
   const [openError, setOpenError] = useState(false);
   const [openErrorConexao, setOpenErrorConexao] = useState(false);
@@ -35,7 +32,7 @@ export const DetalheDePessoas: React.FC = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdateError, setOpenUpdateError] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-  const [state, setState] = useState<StateDetalhePessoa>({
+  const [state, setState] = useState<StateDetalheCidade>({
     open: false,
     vertical: 'top',
     horizontal: 'right',
@@ -45,21 +42,19 @@ export const DetalheDePessoas: React.FC = () => {
   useEffect(() => {
     if (id !== 'nova') {
       setIsLoading(true);
-      PessoasService.getById(id).then((result) => {
+      CidadesService.getById(id).then((result) => {
         setIsLoading(false);
         if (result instanceof Error) {
           setOpenErrorConexao(true);
-          navigate('/pessoas');
+          navigate('/cidades');
         } else {
-          setNome(result.fullName);
+          setCity(result.city);
           formRef.current?.setData(result);
         }
       });
     } else {
       formRef.current?.setData({
-        fullName: '',
-        email: '',
-        city: '',
+        city: ''
       });
     }
   }, [id]);
@@ -70,7 +65,7 @@ export const DetalheDePessoas: React.FC = () => {
       .then((dadosValidados) => {
         setIsLoading(true);
         if (id === 'nova') {
-          PessoasService.create(dadosValidados).then((result) => {
+          CidadesService.create(dadosValidados).then((result) => {
             setIsLoading(false);
             if (result instanceof Error) {
               setOpenErrorConexao(true);
@@ -78,11 +73,11 @@ export const DetalheDePessoas: React.FC = () => {
               if (isSaveAndClose()) {
                 setOpenCreate(true);
                 setTimeout(() => {
-                  navigate('/pessoas');
+                  navigate('/cidades');
                 }, 6000); 
               } else {
                 setOpenCreate(true);
-                navigate(`/pessoas/detalhe/${result}`);
+                navigate(`/cidades/detalhe/${result}`);
                 setTimeout(() => {
                   setOpenCreate(false);
                 }, 6000); 
@@ -90,21 +85,25 @@ export const DetalheDePessoas: React.FC = () => {
             }
           });
         } else {
-          PessoasService.updateById(id, { id: id, ...dadosValidados }).then(
+          CidadesService.updateById(id, { id: id, ...dadosValidados }).then(
             (result) => {
+              
               setIsLoading(false);
+
               if (result instanceof Error) {
                 setOpenErrorConexao(true);
                 setOpenUpdateError(true);
                 setTimeout(() => {
                   setOpenUpdateError(false);
                 }, 6000);
+                
               } else {
+                
                 if (isSaveAndClose()) {
                   setOpenUpdate(true);
                   
                   setTimeout(() => {
-                    navigate('/pessoas');
+                    navigate('/cidades');
                   }, 6000); 
                 }
                 setOpenUpdate(true);
@@ -112,6 +111,7 @@ export const DetalheDePessoas: React.FC = () => {
                   setOpenUpdate(false);
                 }, 6000);
               }
+              
             }
           );
         }
@@ -129,7 +129,7 @@ export const DetalheDePessoas: React.FC = () => {
   };
   const handleDelete = (id: string, newState: SnackbarOrigin) => {
     setOpenDialog(true);
-    PessoasService.deleteById(id).then((result) => {
+    CidadesService.deleteById(id).then((result) => {
       if (result instanceof Error) {
         setOpenError(true);
         setOpenDialog(false);
@@ -137,12 +137,11 @@ export const DetalheDePessoas: React.FC = () => {
         setState({ open: true, ...newState });
         setOpenDialog(false);
         setTimeout(() => {
-          navigate('/pessoas');
+          navigate('/cidades');
         },6000);
       }
     });
   };
-
   const handleCloseSuccess = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -197,9 +196,11 @@ export const DetalheDePessoas: React.FC = () => {
   const handleClose = () => {
     setOpenDialog(false);
   };
+
+
   return (
     <LayoutBaseDePagina
-      titulo={id === 'nova' ? 'Novo Usuário' : nome}
+      titulo={id === 'nova' ? 'Nova Cidade' : city}
       barraDeFerramentas={
         <FerramentasDeDetalhes
           textoBotaoNovo='Nova'
@@ -210,22 +211,22 @@ export const DetalheDePessoas: React.FC = () => {
           aoClicarEmSalvar={save}
           aoClicarEmSalvarEFechar={saveAndClose}
           aoClicarEmNovo={() => {
-            navigate('/pessoas/detalhe/nova');
+            navigate('/cidades/detalhe/nova');
           }}
           aoClicarEmVoltar={() => {
-            navigate('/pessoas');
+            navigate('/cidades');
           }}
         />
       }
     >
       <Snackbar  key={vertical + horizontal}  anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={6000} onClose={handleCloseSuccess}>
         <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }} variant='filled'>
-        Usuário excluido com sucesso!
+          Cidade excluida com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao excluir usuário!
+          Erro ao excluir cidade!
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorConexao} autoHideDuration={6000} onClose={handleCloseErrorConexao} anchorOrigin={{vertical, horizontal}}>
@@ -235,17 +236,17 @@ export const DetalheDePessoas: React.FC = () => {
       </Snackbar>
       <Snackbar open={openUpdate} autoHideDuration={6000} onClose={handleCloseUpdate} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseUpdate} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Usuário atualizado com sucesso!
+          Cidade atualizada com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openUpdateError} autoHideDuration={6000} onClose={handleCloseUpdateError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseUpdateError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao atualizar usuário!
+          Erro ao atualizar cidade!
         </Alert>
       </Snackbar>
       <Snackbar open={openCreate} autoHideDuration={6000} onClose={handleCloseCreate} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseCreate} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Usuário criado com sucesso!
+          Cidade criada com sucesso!
         </Alert>
       </Snackbar>
       <VForm ref={formRef} onSubmit={handleSave}>
@@ -282,7 +283,7 @@ export const DetalheDePessoas: React.FC = () => {
                 <Button color='error' autoFocus onClick={handleClose}>
                   Cancelar
                 </Button>
-                <Button color='success' onClick={() => handleDelete(id, {vertical: 'top',horizontal: 'right',})} autoFocus>
+                <Button color='success' onClick={() => handleDelete(id, {vertical: 'top',horizontal: 'right'})} autoFocus>
                   Apagar
                 </Button>
               </DialogActions>
@@ -291,11 +292,11 @@ export const DetalheDePessoas: React.FC = () => {
               <Grid item xs={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
-                  label='Nome Completo'
-                  name='fullName'
+                  label='Cidade'
+                  name='city'
                   disabled={isLoading}
                   color='secondary'
-                  onChange={(e) => setNome(e.target.value)}
+                  onChange={(e) => setCity(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -303,16 +304,11 @@ export const DetalheDePessoas: React.FC = () => {
               <Grid item xs={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
-                  label='E-mail'
-                  name='email'
+                  label='Estado'
+                  name='state'
                   disabled={isLoading}
                   color='secondary'
                 />
-              </Grid>
-            </Grid>
-            <Grid container item direction='row' spacing={2}>
-              <Grid item xs={12} md={6} lg={4} xl={2}>
-                <AutoCompleteCidade isExternalLoading={isLoading} />
               </Grid>
             </Grid>
           </Grid>
