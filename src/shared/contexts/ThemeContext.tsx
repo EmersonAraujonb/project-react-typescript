@@ -14,7 +14,7 @@ const ThemeContext = React.createContext({} as IThemeContextData);
 export const ThemeContextProvider: React.FC<IThemeContextData>  = ({ children }) => {
 
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
-    const theme = localStorage.getItem('theme');
+    const theme = sessionStorage.getItem('theme');
 
     if (theme === 'dark') {
       return 'dark';
@@ -51,12 +51,12 @@ export const useThemeContext = () => {
   function changeTheme() {
     if (isDarkTheme === 'dark') {
       setIsDarkTheme('light');
-      localStorage.setItem('theme', 'light');
+      sessionStorage.setItem('theme', 'light');
 
     }
     if (isDarkTheme === 'light') {
       setIsDarkTheme('dark');
-      localStorage.setItem('theme', 'dark');
+      sessionStorage.setItem('theme', 'dark');
     }
   }
 

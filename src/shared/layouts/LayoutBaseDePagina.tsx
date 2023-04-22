@@ -118,7 +118,7 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
   const userLogado = JSON.parse(dados);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const active = localStorage.getItem('theme');
+  const active = sessionStorage.getItem('theme');
 
   const { toggleDrawerOpen } = useDrawerContext();
 
@@ -247,13 +247,6 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
           <Avatar src={image} /> <strong>{user ? user : email}</strong>
         </MenuItem>
         <MenuItem>{user ? email : undefined}</MenuItem>
-        <Divider />
-        <MenuItem >
-          <ListItemIcon>
-            <PersonAdd fontSize='small' />
-          </ListItemIcon>
-          Adicionar nova conta
-        </MenuItem>
         <Divider />
         <MenuItem style={{ backgroundColor: '#ff3232' }} onClick={signOut}>
           <ListItemIcon>

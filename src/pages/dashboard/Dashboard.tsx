@@ -3,10 +3,22 @@ import {
   Box,
   Card,
   CardContent,
+  CircularProgress,
   Grid,
+  LinearProgress,
+  Paper,
   Snackbar,
   SnackbarOrigin,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TableRow,
+  Theme,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FerramentasDaListagem } from '../../shared/components';
@@ -16,17 +28,58 @@ import { PessoasService } from '../../shared/services/api/pessoas/PessoasService
 import GroupsIcon from '@mui/icons-material/Groups';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import HomeIcon from '@mui/icons-material/Home';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Chart } from 'react-google-charts';
+import _ from 'lodash';
 
 export interface SState extends SnackbarOrigin {
   open: boolean;
 }
+export const data = [
+  ['Estado', 'Municípios', 'Regiões Administrativas'],
+  ['Acre', 22, 0],
+  ['Alagoas', 102, 0],
+  ['Amazonas', 62, 0],
+  ['Amapá', 16, 0],
+  ['Bahia', 417, 0],
+  ['Ceará', 184, 0],
+  ['Distrito Federal', 0, 33],
+  ['Espírito Santo', 78, 0],
+  ['Goiás', 246, 0],
+  ['Maranhão', 217, 0],
+  ['Minas Gerais', 853, 0],
+  ['Mato Grosso do Sul', 79, 0],
+  ['Mato Grosso', 141, 0],
+  ['Pará', 144, 0],
+  ['Paraíba', 223, 0],
+  ['Pernambuco', 185, 0],
+  ['Piauí', 224, 0],
+  ['Paraná', 399, 0],
+  ['Rio de Janeiro', 92, 0],
+  ['Rio Grande do Norte', 167, 0],
+  ['Rondônia', 52, 0],
+  ['Roraima', 15, 0],
+  ['Rio Grande do Sul', 497, 0],
+  ['Santa Catarina', 295, 0],
+  ['Sergipe', 75, 0],
+  ['São Paulo', 645, 0],
+  ['Tocantins', 139, 0],
+];
 
+export const options = {
+  vAxis: { title: 'Estados' },
+  hAxis: { title: 'Municípios / Regiões Administrativas ' },
+  series: { 5: { type: 'bar' } },
+  legend: { position: 'top' }
+};
 export const Dashboard = () => {
   const [isLoadingCidades, setIsLoadingCidades] = useState(true);
   const [isLoadingPessoas, setIsLoadingPessoas] = useState(true);
   const [totalCountCidades, setTotalCountCidades] = useState(0);
   const [totalCountPessoas, setTotalCountPessoas] = useState(0);
+  const [peoples, setPeoples] = useState<any>();
+  const [cities, setCities] = useState<any>();
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [openErrorConexao, setOpenErrorConexao] = useState(false);
   const [state, setState] = useState<SState>({
     open: false,
@@ -34,11 +87,12 @@ export const Dashboard = () => {
     horizontal: 'right',
   });
   const { vertical, horizontal } = state;
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     setIsLoadingPessoas(true);
     setIsLoadingCidades(true);
-    PessoasService.getAll(1).then((result: any) => {
+    PessoasService.getAll(1).then((result) => {
       setIsLoadingPessoas(false);
       if (result instanceof Error) {
         setOpenErrorConexao(true);
@@ -55,6 +109,38 @@ export const Dashboard = () => {
       }
     });
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const resolvedResponse = await fetch(
+        'https://register-typescript-api.onrender.com/peoples'
+      );
+      const json = await resolvedResponse.json();
+      const data = json.map((data: any, index: number) => (
+        <Typography variant='overline' key={index}>
+          {data.fullName}
+        </Typography>
+      ));
+      return setPeoples(data.reverse().slice(0, 5));
+   
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchDataCity = async () => {
+      const resolvedResponse = await fetch(
+        'https://register-typescript-api.onrender.com/cities'
+      );
+      const json = await resolvedResponse.json();
+      const data = json.map((data: any, index: number) => (
+        <Typography variant='overline' key={index}>
+          {data.city}
+        </Typography>
+      ));
+      return setCities(data.reverse().slice(0, 5));
+    };
+    fetchDataCity();
+  }, []);
 
   const handleCloseErrorConexao = (
     event?: React.SyntheticEvent | Event,
@@ -66,14 +152,16 @@ export const Dashboard = () => {
 
     setOpenErrorConexao(false);
   };
-
   return (
     <LayoutBaseDePagina
       titulo='Página Inicial'
       barraDeFerramentas={
-        <FerramentasDaListagem mostrarBotaoNovo={false} icone={<HomeIcon color='secondary'/>} titulo='/ Estatísticas' />
+        <FerramentasDaListagem
+          mostrarBotaoNovo={false}
+          icone={<HomeIcon color='secondary' />}
+          titulo='/ Estatísticas'
+        />
       }
-      
     >
       <Snackbar
         open={openErrorConexao}
@@ -95,15 +183,16 @@ export const Dashboard = () => {
           <Grid item container spacing={2}>
             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
               <Card
-                onClick={() => <Navigate to='/pessoas' />}
+                onClick={() => navigate('/pessoas')}
                 sx={{
                   borderRadius: '20px',
-                  boxShadow: 'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
-                  background: 'linear-gradient(to right, #298afa, #88bdf8);'
+                  boxShadow:
+                    'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
+                  background: 'linear-gradient(to right, #f02fc2, #6094ea);',
                 }}
               >
                 <CardContent>
-                  <GroupsIcon sx={{marginLeft: '45%', fontSize: 40 }} />
+                  <GroupsIcon sx={{ marginLeft: '45%', fontSize: 40 }} />
                   <Typography variant='h5' align='center' fontWeight='900'>
                     Total de pessoas
                   </Typography>
@@ -127,19 +216,25 @@ export const Dashboard = () => {
                         {totalCountPessoas}
                       </Typography>
                     )}
-                    {isLoadingPessoas && (
-                      <Typography variant='h6'>Carregando...</Typography>
-                    )}
+                    {isLoadingPessoas && <CircularProgress color='inherit' />}
                   </Box>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-              <Card sx={{ borderRadius: '20px',  boxShadow: 'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px', background:'linear-gradient(to right,#00ffcc,#b4e6dc)' }}>
+              <Card
+                sx={{
+                  borderRadius: '20px',
+                  boxShadow:
+                    'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
+                  background: 'linear-gradient(to right,#196a92,#19d866)',
+                }}
+                onClick={() => navigate('/cidades')}
+              >
                 <CardContent>
-                  <LocationCityIcon sx={{marginLeft: '45%', fontSize: 40 }} />
+                  <LocationCityIcon sx={{ marginLeft: '45%', fontSize: 40 }} />
 
-                  <Typography variant='h5' align='center'  fontWeight='900'>
+                  <Typography variant='h5' align='center' fontWeight='900'>
                     Total de Cidades
                   </Typography>
                   <Box
@@ -161,11 +256,133 @@ export const Dashboard = () => {
                         {totalCountCidades}
                       </Typography>
                     )}
-                    {isLoadingCidades && (
-                      <Typography variant='h6'>Carregando...</Typography>
-                    )}
+                    {isLoadingCidades && <CircularProgress color='inherit' />}
                   </Box>
                 </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Card
+                sx={{
+                  borderRadius: '20px',
+                  boxShadow:
+                    'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
+                }}
+              >
+                <CardContent>
+                  <TableContainer component={Paper} variant='elevation'>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align='center' colSpan={3}>
+                            Ultimas pessoas cadastradas
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>
+                            <Box
+                              display='flex'
+                              justifyContent='center'
+                              alignItems='center'
+                              flexDirection='column'
+                            >
+                              {peoples}
+                            </Box>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                      <TableFooter>
+                        {isLoadingPessoas && (
+                          <TableRow>
+                            <TableCell colSpan={3}>
+                              <LinearProgress
+                                variant='indeterminate'
+                                color='success'
+                              />
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableFooter>
+                    </Table>
+                  </TableContainer>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Card
+                sx={{
+                  borderRadius: '20px',
+                  boxShadow:
+                    'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
+                }}
+              >
+                <CardContent>
+                  <TableContainer component={Paper} variant='elevation'>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align='center' colSpan={3}>
+                            Ultimas cidades cadastradas
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>
+                            <Box
+                              display='flex'
+                              justifyContent='center'
+                              alignItems='center'
+                              flexDirection='column'
+                            >
+                              {cities}
+                            </Box>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                      <TableFooter>
+                        {isLoadingCidades && (
+                          <TableRow>
+                            <TableCell colSpan={3}>
+                              <LinearProgress
+                                variant='indeterminate'
+                                color='success'
+                              />
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableFooter>
+                    </Table>
+                  </TableContainer>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={8} xl={6}>
+              <Card
+                sx={
+                  !mdDown
+                    ? {
+                      minWidth: 600,
+                      borderRadius: '20px',
+                      boxShadow:
+                        'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
+                    }
+                    : {
+                      borderRadius: '20px',
+                      boxShadow:
+                        'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
+                    }
+                }
+              >
+                <Chart
+                  chartType='BarChart'
+                  options={options}
+                  data={data}
+                  width='100%'
+                  height={500}
+                />
               </Card>
             </Grid>
           </Grid>
