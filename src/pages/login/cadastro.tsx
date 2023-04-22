@@ -28,6 +28,8 @@ export interface StateCreateUser extends SnackbarOrigin {
 
 export const Cadastro = () => {
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+
   const {
     signedUser,
     email,
@@ -137,9 +139,8 @@ export const Cadastro = () => {
       >
         <CardMedia
           component='img'
-          height={smDown ? 105 : 130}
+          height={smDown ? 105 : mdDown ? 130 : 170}
           image='../../../logo.png'
-          width={smDown ? 100 : 200}
           alt='logo-web-cadastro'
         />
         <CardContent>
@@ -147,7 +148,7 @@ export const Cadastro = () => {
             display='flex'
             flexDirection='column'
             gap={2}
-            width={smDown ? 270 : 350}
+            width={smDown ? 270 : mdDown ? 350 : 400}
           >
             <Typography variant='h6' textAlign='center'>
               Cadastre-se

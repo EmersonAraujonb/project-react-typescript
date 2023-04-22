@@ -39,6 +39,8 @@ export const Login = () => {
     openError,
   }: any = useContext(AuthGoogleContext);
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [isLoading, setIsLoading] = useState(false);
@@ -115,9 +117,8 @@ export const Login = () => {
         >
           <CardMedia
             component='img'
-            height={smDown ? 105 : 130}
+            height={smDown ? 105 : mdDown ? 160: 210}
             image='../../../logo.png'
-            width={smDown ? 100 : 200}
             alt='logo-web-cadastro'
           />
           <CardContent>
@@ -125,7 +126,7 @@ export const Login = () => {
               display='flex'
               flexDirection='column'
               gap={2}
-              width={smDown ? 270 : 350}
+              width={smDown ? 270: mdDown ? 350 : 450}
             >
               <Typography variant='h6' textAlign='center'>
                 Acesse sua conta
