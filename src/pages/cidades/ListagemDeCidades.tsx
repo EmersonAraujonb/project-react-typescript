@@ -33,6 +33,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { Environment } from '../../shared/environment';
+import { useTranslation } from 'react-i18next';
 
 export interface State extends SnackbarOrigin {
   open: boolean;
@@ -50,6 +51,7 @@ export const ListagemDeCidades: React.FC = () => {
   const [openError, setOpenError] = useState(false);
   const [openErrorConexao, setOpenErrorConexao] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [t] = useTranslation();
   const [state, setState] = useState<State>({
     open: false,
     vertical: 'top',
@@ -129,11 +131,11 @@ export const ListagemDeCidades: React.FC = () => {
 
   return (
     <LayoutBaseDePagina
-      titulo='Listagem de Cidades'
+      titulo={t('tituloListagemDeCidades')}
       barraDeFerramentas={
         <FerramentasDaListagem
           mostrarInputBusca
-          textoBotaoNovo='Nova'
+          textoBotaoNovo={t('textoBotaoNovo')}
           aoClicarEmNovo={() => navigate('/cidades/detalhe/nova')}
           textoDaBusca={busca}
           aoMudarTextoDeBusca={(texto) =>
@@ -144,17 +146,17 @@ export const ListagemDeCidades: React.FC = () => {
     >
       <Snackbar  key={vertical + horizontal}  anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={6000} onClose={handleCloseSuccess}>
         <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Cidade deletada com sucesso!
+          {t('cidadeDeletadaComSucesso')}
         </Alert>
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao apagar cidade!
+          {t('erroAoApagarCidade')}
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorConexao} autoHideDuration={6000} onClose={handleCloseErrorConexao} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseErrorConexao} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro de conexão!
+          {t('erroDeConexao')}
         </Alert>
       </Snackbar>
       <TableContainer
@@ -165,9 +167,9 @@ export const ListagemDeCidades: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell >Cidade</TableCell>
-              <TableCell >Estado</TableCell>
-              <TableCell >Açoẽs</TableCell>
+              <TableCell >{t('cidade')}</TableCell>
+              <TableCell >{t('estado')}</TableCell>
+              <TableCell >{t('acoes')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -183,19 +185,19 @@ export const ListagemDeCidades: React.FC = () => {
                     aria-labelledby="responsive-dialog-title"
                   >
                     <DialogTitle id="responsive-dialog-title">
-                      {'Deseja excluir esta cidade?'}
+                      {t('desejaApagarEstaCidade')}
                     </DialogTitle>
                     <DialogContent>
                       <DialogContentText>
-                      Esta operação não poderá ser desfeita. Deseja continuar?
+                        {t('estaOperacaoNaoPoderaSerDesfeita')}
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                       <Button color='error' autoFocus onClick={handleClose}>
-                        Cancelar
+                        {t('botaoCancelar')}
                       </Button>
                       <Button color='success' onClick={() => handleDelete(row.id, {vertical: 'top',horizontal: 'right',})} autoFocus>
-                        Apagar
+                        {t('botaoApagar')}
                       </Button>
                     </DialogActions>
                   </Dialog>

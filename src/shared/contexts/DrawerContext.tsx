@@ -3,7 +3,7 @@ import React from 'react';
 interface IDrawerOption {
   icon: string;
   path: string;
-  label: string;
+  label: any;
 }
 
 interface IDrawerContextData {

@@ -5,6 +5,7 @@ import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import { useContext, useEffect, useState } from 'react';
 import { AuthGoogleContext } from '../../contexts/AuthGoogle';
+import { useTranslation } from 'react-i18next';
 
 const style = {
   position: 'absolute',
@@ -29,6 +30,7 @@ function Welcome() {
   const [open, setOpen] = useState(true);
   const handleClose = () => setOpen(false);
   const [showMessage, setShowMessage] = useState(false);
+  const {t} = useTranslation();
 
   useEffect(() => {
     const hasShownWelcomeMessage = sessionStorage.getItem(
@@ -63,20 +65,20 @@ function Welcome() {
                 variant='h6'
                 component='h2'
               >
-                Bem-vindo!
+                {t('bemVindo')}
               </Typography>
               <Typography sx={{ mt: 2 }}>
-                Olá,{' '}
+                {t('ola')},{' '}
                 {user ? (
                   <>
                     <strong>{user}</strong>
                   </>
                 ) : (
                   <>
-                    usuário do e-mail: <strong>{email}</strong>
+                    {t('usuarioDoEmail')} <strong>{email}</strong>
                   </>
                 )}
-                ! Obrigado por visitar a página <strong>WEB CADASTRO</strong>.
+                {t('obrigadoPorVisitarAPagina')} <strong>WEB CADASTRO</strong>.
               </Typography>
             </Box>
           </Fade>

@@ -8,10 +8,10 @@ interface IBarraDeFerramentasProps {
   textoDaBusca?: string;
   mostrarInputBusca?: boolean;
   aoMudarTextoDeBusca?: (novoTexto: string) => void;
-  textoBotaoNovo?: string;
+  textoBotaoNovo?: any;
   mostrarBotaoNovo?: boolean;
   aoClicarEmNovo?: () => void;
-  titulo?: string;
+  titulo?: any;
   icone?: any;
 }
 

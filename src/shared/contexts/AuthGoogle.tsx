@@ -8,6 +8,7 @@ import {
 } from 'firebase/auth';
 import { app } from '../services/api/auth/firebaseConfig';
 import { Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface IAuthGoogle {
   children: React.ReactNode;
@@ -20,8 +21,9 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
   const auth = getAuth(app);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [openError, setOpenError] = useState('');
+  const [openError, setOpenError] = useState<any>();
   const [createUser, setCreateUser] = useState('');
+  const {t} = useTranslation();
   
 
   useEffect(() => {
@@ -31,9 +33,7 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
 
       if (sessionToken && sessionUser) {
         setUser(sessionUser);
-        
       }
-      
     };
 
     loadStoreAuth();
@@ -50,10 +50,7 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
         sessionStorage.setItem('User', JSON.stringify(user));
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(error);
       });
   };
   const sign = () => {
@@ -68,29 +65,23 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+        console.log(error);
         if (errorCode == 'auth/too-many-requests') {
-          return setOpenError(
-            'As solicitações foram bloqueadas devido a atividades incomuns. Tente novamente depois que algum tempo.'
-          );
+          return setOpenError(t('asSolicitacoesForamBloqueadas'));
         } else if (errorCode == 'auth/invalid-email') {
-          return setOpenError('O endereço de e-mail não é válido.');
+          return setOpenError(t('oEnderecoDeEmailNaoEValido'));
         } else if (errorCode == 'auth/wrong-password') {
-          return setOpenError('Senha incorreta.');
+          return setOpenError(t('senhaIncorreta'));
         } else if (errorCode == 'auth/internal-error') {
-          return setOpenError(
-            'O servidor de autenticação encontrou um erro inesperado ao tentar processar a solicitação.'
-          );
+          return setOpenError(t('erroInesperado'));
         } else if (errorCode == 'auth/weak-password') {
-          return setOpenError('A senha é muito fraca.');
+          return setOpenError(t('senhaMuitoFraca'));
         } else if (errorCode == 'auth/missing-email') {
-          return setOpenError('O email é obrigatório!');
+          return setOpenError(t('emailObrigatorio'));
         } else if (errorCode == 'auth/invalid-password') {
-          return setOpenError(
-            'A senha é inválida, precisa ter pelo menos 6 caracteres'
-          );
+          return setOpenError(t('aSenhaPrecisaTerPeloMenosSeisCaracteres'));
         } else if (errorCode == 'auth/user-not-found') {
-          return setOpenError('Usuário não existe.');
+          return setOpenError(t('usuarioNaoExiste'));
         } else {
           return false;
         }
@@ -107,27 +98,21 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+        console.log(error);
         if (errorCode == 'auth/email-already-in-use') {
-          return setOpenError(
-            'Já existi uma conta com o endereço de email fornecido.'
-          );
+          return setOpenError(t('jaExisteUmaContaComEsseEmail'));
         } else if (errorCode == 'auth/invalid-email') {
-          return setOpenError('O endereço de e-mail não é válido.');
+          return setOpenError(t('oEnderecoDeEmailNaoEValido'));
         } else if (errorCode == 'auth/credential-already-in-use') {
-          return setOpenError('Já existe uma conta para esta credencial.');
+          return setOpenError(t('jaExisteUmaContaParaEstaCredencial'));
         } else if (errorCode == 'auth/internal-error') {
-          return setOpenError(
-            'O servidor de autenticação encontrou um erro inesperado ao tentar processar a solicitação.'
-          );
+          return setOpenError(t('erroInesperado'));
         } else if (errorCode == 'auth/weak-password') {
-          return setOpenError('A senha é muito fraca.');
+          return setOpenError(t('senhaMuitoFraca'));
         } else if (errorCode == 'auth/missing-email') {
           return setOpenError('O email é obrigatório!');
         } else if (errorCode == 'auth/invalid-password') {
-          return setOpenError(
-            'A senha é inválida, precisa ter pelo menos 6 caracteres'
-          );
+          return setOpenError(t('emailObrigatorio'));
         } else {
           return null;
         }
@@ -137,6 +122,7 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
   function signOut() {
     sessionStorage.clear();
     setUser(null);
+    document.location.reload();
     return <Navigate to='/' />;
   }
   return (

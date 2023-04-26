@@ -1,6 +1,7 @@
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
 import { useField } from '@unform/core';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDebounce } from '../../../shared/hooks';
 import { CidadesService } from '../../../shared/services/api/cidades/CidadesService';
 
@@ -25,6 +26,7 @@ export const AutoCompleteCidade: React.FC<AutoCompleteCidadeProps> = ({
   const [selectedId, setSelectedId] = useState<string | undefined>(defaultValue);
 
   const { debounce } = useDebounce();
+  const {t} = useTranslation();
 
   useEffect(() => {
     registerField({
@@ -66,10 +68,11 @@ export const AutoCompleteCidade: React.FC<AutoCompleteCidadeProps> = ({
 
   return (
     <Autocomplete
-      openText='Abrir'
-      closeText='Fechar'
-      noOptionsText='Sem opções'
-      loadingText='Carregando...'
+      openText={t('hoverAbrir')|| undefined}
+      closeText={t('hoverFechar')|| undefined}
+      noOptionsText={t('campoOpcoes')}
+      loadingText={t('carregando')}
+      clearText={t('limparCampo')|| undefined}
       disablePortal
       value={autoCompleteSelectedOption}
       loading={isLoading}
@@ -90,7 +93,7 @@ export const AutoCompleteCidade: React.FC<AutoCompleteCidadeProps> = ({
         <TextField
           color='secondary'
           {...params}
-          label='Cidade'
+          label={t('cidade')}
           error={!!error}
           helperText={error}
         />

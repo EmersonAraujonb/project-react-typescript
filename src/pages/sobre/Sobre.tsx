@@ -10,6 +10,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { FerramentasDaListagem } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
 
@@ -17,11 +18,12 @@ const Sobre = () => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const {t} = useTranslation();
 
   return (
     <LayoutBaseDePagina
-      titulo='Sobre Web Cadastro'
-      barraDeFerramentas={<FerramentasDaListagem mostrarBotaoNovo={false} icone={<Info color='secondary'/>} titulo='/ Sobre'/>}
+      titulo={t('tituloSobre')}
+      barraDeFerramentas={<FerramentasDaListagem mostrarBotaoNovo={false} icone={<Info color='secondary'/>} titulo={t('tituloBarraDeFerramentasSobre')}/>}
     >
       <Box width='100%' display='flex'>
         <Grid container margin={3} textAlign='center'>
@@ -32,8 +34,7 @@ const Sobre = () => {
                 align='center'
                 fontWeight={'500'}
               >
-                Um objetivo simples; simplificar a criação de usuários e
-                cidades.
+                {t('umObjetivoSimples')}
               </Typography>
               <Grid item margin={4}>
                 <Typography
@@ -41,18 +42,14 @@ const Sobre = () => {
                   align='justify'
                   fontWeight={'100'}
                 >
-                  Iniciamos a Web Cadastro para simplificar a experiência de
-                  criação e capacitar os usuários a editar regularmente. Melhor
-                  de todos? Fazemos isso sem problemas, o que significa sem spam
-                  e definitivamente sem chamadas indesejadas, já que nem pedimos
-                  seu número de telefone (ao contrário de outros web sites...).
+                  {t('texto1')}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <Card>
                   <CardContent>
                     <ImageListItem>
-                      <img src='../../../desks.jpg' alt='' />
+                      <img src='../../../registration.jpg' alt='' />
                     </ImageListItem>
                   </CardContent>
                 </Card>
@@ -63,7 +60,7 @@ const Sobre = () => {
                   align='center'
                   fontWeight={'400'}
                 >
-                  Missão
+                  {t('missao')}
                 </Typography>
                 <Grid item margin={4}>
                   <Typography
@@ -71,7 +68,7 @@ const Sobre = () => {
                     align='center'
                     fontWeight={'100'}
                   >
-                    Crie usuários e cidades com facilidade e rapidez!
+                    {t('texto2')}
                   </Typography>
                 </Grid>
                 <Card>
@@ -88,7 +85,7 @@ const Sobre = () => {
                   align='center'
                   fontWeight={'400'}
                 >
-                  Crie sem medo
+                  {t('crieSemMedo')}
                 </Typography>
                 <Grid item margin={4}>
                   <Typography
@@ -96,27 +93,20 @@ const Sobre = () => {
                     align='center'
                     fontWeight={'100'}
                   >
-                    Temos determinação. Não há trabalho pequeno demais ou
-                    desafio impossível. Estamos juntos e vamos com tudo.
-                    Pensamos no longo prazo e sempre otimizamos pensando no Web
-                    Cadastro como um todo. Nunca dizemos essa não é a minha
-                    função.
+                    {t('texto3')}
                   </Typography>
                   <Typography
                     variant={smDown ? 'body2' : mdDown ? 'body1' : 'h6'}
                     align='center'
                     fontWeight={'100'}
                   >
-                    Temos uma predisposição pela ação e valorizamos arriscar de
-                    forma corajosa e calculada. Nos movemos com agilidade e não
-                    deixamos o cliente esperando. Quando fracassamos, aprendemos
-                    com isso e tentamos de novo.
+                    {t('texto4')}
                   </Typography>
                 </Grid>
                 <Card>
                   <CardContent>
                     <ImageListItem>
-                      <img src='../../../city.webp' />
+                      <img src='../../../registration2.jpg' />
                     </ImageListItem>
                   </CardContent>
                 </Card>

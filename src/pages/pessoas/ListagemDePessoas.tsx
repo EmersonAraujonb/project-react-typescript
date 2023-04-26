@@ -34,6 +34,7 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { Environment } from '../../shared/environment';
+import { useTranslation } from 'react-i18next';
 
 export interface Estado extends SnackbarOrigin {
   open: boolean;
@@ -49,6 +50,7 @@ export const ListagemDePessoas: React.FC = () => {
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [openError, setOpenError] = useState(false);
   const [openErrorConexao, setOpenErrorConexao] = useState(false);
+  const {t} = useTranslation();
   const [state, setState] = useState<Estado>({
     open: false,
     vertical: 'top',
@@ -140,11 +142,11 @@ export const ListagemDePessoas: React.FC = () => {
 
   return (
     <LayoutBaseDePagina
-      titulo='Listagem de pessoas'
+      titulo={t('tituloListagemDePessoas')}
       barraDeFerramentas={
         <FerramentasDaListagem
           mostrarInputBusca
-          textoBotaoNovo='Nova'
+          textoBotaoNovo={t('textoBotaoNovo')}
           aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
           textoDaBusca={busca}
           aoMudarTextoDeBusca={(texto) =>
@@ -155,17 +157,17 @@ export const ListagemDePessoas: React.FC = () => {
     >
       <Snackbar  key={vertical + horizontal}  anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={6000} onClose={handleCloseSuccess}>
         <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Usuário deletado com sucesso!
+          {t('usuarioDeletadoComSucesso')}
         </Alert>
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao apagar usuário!
+          {t('erroAoApagarUsuario')}
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorConexao} autoHideDuration={6000} onClose={handleCloseErrorConexao} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseErrorConexao} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro de conexão!
+          {t('erroDeConexao')}
         </Alert>
       </Snackbar>
       
@@ -182,19 +184,19 @@ export const ListagemDePessoas: React.FC = () => {
                 width={100}
                
               >
-                Nome Completo
+                {t('nomeCompleto')}
               </TableCell>
               <TableCell
                 width={100}
                 
               >
-                Email
+                {t('email')}
               </TableCell>
               <TableCell
                 width={100}
               
               >
-                Açoẽs
+                {t('acoes')}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -215,19 +217,19 @@ export const ListagemDePessoas: React.FC = () => {
                     aria-labelledby="responsive-dialog-title"
                   >
                     <DialogTitle id="responsive-dialog-title">
-                      {'Deseja excluir este usuário?'}
+                      {t('desejaApagarEsteUsuario')}
                     </DialogTitle>
                     <DialogContent>
                       <DialogContentText>
-                      Esta operação não poderá ser desfeita. Deseja continuar?
+                        {t('estaOperacaoNaoPoderaSerDesfeita')}
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                       <Button color='error' autoFocus onClick={handleClose}>
-                        Cancelar
+                        {t('botaoCancelar')}
                       </Button>
                       <Button color='success' onClick={() => handleDelete(row.id, {vertical: 'top',horizontal: 'right',})} autoFocus>
-                        Apagar
+                        {t('botaoApagar')}
                       </Button>
                     </DialogActions>
                   </Dialog>

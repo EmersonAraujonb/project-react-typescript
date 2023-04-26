@@ -1,0 +1,131 @@
+{
+    "translation": {
+        "tituloPrincipal": "Tableau de bord",
+        "tituloFerramentaDaListagemDashboard": "/ Statistiques",
+        "erroDeConexao": "Erreur de connexion!",
+        "totalDePessoas":"Personnes totales",
+        "totalDeCidades": "Villes totales",
+        "ultimasPessoasCadastradas": "Dernières personnes inscrites",
+        "ultimasCidadesCadastradas": "Dernières villes enregistrées",
+        "botaoVerMais": "Voir plus",
+        "graficoEstado": "État",
+        "graficoMunicipios": "Comtés",
+        "graficoRegioesAdministrativas": "Régions administratives",
+        "graficoTituloEstados": "États",
+        "graficoTituloMunicipios/RegioesAdministrativas": " Comtés / Régions administratives",
+        "tituloConfiguracoesDoUsuario": "Paramètres",
+        "tituloTrocaDeTema": "Changement de thème",
+        "botaoLogout": "Sortir",
+        "menuLateralInicio": "Accueil",
+        "menuLateralPessoas": "Personnes",
+        "menuLateralCidades": "Villes",
+        "menuLateralContato": "Contact",
+        "menuLateralSobre": "Á propos",
+        "tituloListagemDePessoas": "Liste des personnes",
+        "textoBotaoNovo": "Nouveau",
+        "usuarioDeletadoComSucesso":"Utilisateur supprimé avec succès",
+        "erroAoApagarUsuario": "Erreur lors de la suppression de l'utilisateur",
+        "nomeCompleto": "Nom et prénom",
+        "email": "E-mail",
+        "acoes": "Actions",
+        "desejaApagarEsteUsuario": "Voulez-vous supprimer cet utilisateur ?",
+        "estaOperacaoNaoPoderaSerDesfeita": "Cette opération ne peut pas être annulée. Souhaitez-vous continuer?",
+        "botaoCancelar":"Annuler",
+        "botaoApagar":"Éteindre",
+        "usuarioAtualizadoComSucesso": "Utilisateur mis à jour avec succès !",
+        "erroAoAtualizarUsuario": "Erreur lors de la mise à jour de l'utilisateur !",
+        "usuarioCriadoComSucesso": "Utilisateur créé avec succès !",
+        "novoUsuario":"Nouvel utilisateur",
+        "geralDetalhe": "Général",
+        "cidade": "Ville",
+        "hoverAbrir": "Ouvrir",
+        "hiverFechar": "Fermer",
+        "limparCampo": "Nettoyer",
+        "campoOpcoes": "aucune option",
+        "carregando": "Chargement...",
+        "salvar": "Sauver",
+        "salvarEFechar": "Sauver et Fermer",
+        "voltar": "Retourner",
+        "tituloListagemDeCidades": "Liste des villes",
+        "cidadeDeletadaComSucesso": "Ville supprimée avec succès !",
+        "erroAoApagarCidade": "Erreur lors de la suppression de la ville !",
+        "estado": "État",
+        "desejaApagarEstaCidade": "Voulez-vous supprimer cette ville ?",
+        "novaCidade": "Nouvelle ville",
+        "cidadeAtualizadaComSucesso": "Ville mise à jour avec succès !",
+        "erroAoAtualizarCidade": "Erreur lors de la mise à jour de la ville !",
+        "cidadeCriadaComSucesso": "Ville créée avec succès !",
+        "tituloFerramentaDaListagemContato": "/ Contact",
+        "tituloContato": "Contact",
+        "nosEstamosAquiParaAjudar": "Nous sommes ici pour aider!",
+        "nosEnvieUmEmail": "Envoyez-nous un e-mail à tout moment, de jour comme de nuit :",
+        "digiteSeuNome": "Tapez votre nom...",
+        "digiteSeuEmail": "exemple@gmail.com",
+        "mensagem": "Message",
+        "digiteSuaMensagem": "Entrez votre message",
+        "mensagemFormulario": "Une erreur est survenue pendant le dépôt du formulaire",
+        "enviar": "Envoyer",
+        "sigaNos": "Suivez-nous:",
+        "tituloSobre": "À propos Web Cadastro",
+        "tituloBarraDeFerramentasSobre": "/ À propos",
+        "umObjetivoSimples": "Un objectif simple; simplifier la création des utilisateurs et des villes.",
+        "texto1": "Nous avons lancé Cadastro Web pour simplifier l'expérience de création et permettre aux utilisateurs de modifier régulièrement. Le meilleur de tous? Nous le faisons de manière transparente, ce qui signifie pas de spam et certainement pas d'appels indésirables, car nous ne vous demandons même pas votre numéro de téléphone (contrairement à d'autres sites Web...).",
+        "missao": "Mission",
+        "texto2": "Créez des utilisateurs et des villes facilement et rapidement !",
+        "crieSemMedo": "créer sans peur",
+        "texto3": "Nous avons de la détermination. Il n'y a pas de travail trop petit ou de défi impossible. Nous sommes ensemble et nous allons avec tout. Nous pensons à long terme et nous optimisons toujours la réflexion sur le Web Cadastro dans son ensemble. Nous ne disons jamais que ce n'est pas mon travail.",
+        "texto4": "Nous avons une prédisposition à l'action et apprécions la prise de risques de manière courageuse et calculée. Nous intervenons rapidement et ne faisons pas attendre le client. Lorsque nous échouons, nous en apprenons et réessayons.",
+        "selecioneUmaLinguagem": "choisissez votre langue:",
+        "idioma": "Langue",
+        "acesseSuaConta": "Accéder à votre compte",
+        "descricaoAreaLogin":"Connectez-vous à votre compte et profitez au maximum de tous les services disponibles.",
+        "senha": "Mot de passe",
+        "login": "Connexion",
+        "loginGoogle": "Connectez-vous avec Google",
+        "naoTemUmaConta":"Vous n'avez pas de compte?",
+        "criarConta":"Créer un compte",
+        "cadastre-se": "Enregistrer",
+        "jaTemUmaConta":"Vous avez déjà un compte?",
+        "obrigadoPelaMensagem": "Merci de nous contacter.",
+        "bemVindo": "Accueillir!",
+        "ola": "Bonjour",
+        "usuarioDoEmail":"utilisateur de messagerie:",
+        "obrigadoPorVisitarAPagina":"! Merci d'avoir visité la page",
+        "oEnderecoDeEmailNaoEValido":"L'adresse e-mail n'est pas valide.",
+        "asSolicitacoesForamBloqueadas":"Les demandes ont été bloquées en raison d'une activité inhabituelle. Réessayez après un certain temps.",
+        "senhaIncorreta": "Mot de passe incorrect",
+        "erroInesperado": "Le serveur d'authentification a rencontré une erreur inattendue lors de la tentative de traitement de la demande.",
+        "senhaMuitoFraca":"Le mot de passe est trop faible.",
+        "emailObrigatorio":"L'e-mail est requis!",
+        "aSenhaPrecisaTerPeloMenosSeisCaracteres": "Le mot de passe n'est pas valide, doit comporter au moins 6 caractères",
+        "usuarioNaoExiste": "L'utilisateur n'existe pas.",
+        "jaExisteUmaContaComEsseEmail":"Un compte avec l'adresse e-mail fournie existait déjà.",
+        "jaExisteUmaContaParaEstaCredencial":"Un compte existe déjà pour cet identifiant."
+
+
+
+
+
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+}

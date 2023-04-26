@@ -29,6 +29,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import { useTranslation } from 'react-i18next';
 
 export interface StateMessageContact extends SnackbarOrigin {
   open: boolean;
@@ -41,6 +42,7 @@ const Contato = () => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [openError, setOpenError] = useState(false);
+  const {t} = useTranslation();
   const [state, setState] = useState<StateMessageContact>({
     open: false,
     vertical: 'top',
@@ -80,7 +82,7 @@ const Contato = () => {
       }, (err) => {
         setResponse({
           type: 'error',
-          message: 'Ocorreu um erro ao enviar o formulário',
+          message: t('mensagemFormulario'),
         });
         setOpenError(true);
       });
@@ -98,8 +100,8 @@ const Contato = () => {
   
   return (
     <LayoutBaseDePagina
-      titulo='Contato'
-      barraDeFerramentas={<FerramentasDaListagem mostrarBotaoNovo={false} icone={<ContactSupportIcon color='secondary'/>} titulo='/ Contato'/>}
+      titulo={t('tituloContato')}
+      barraDeFerramentas={<FerramentasDaListagem mostrarBotaoNovo={false} icone={<ContactSupportIcon color='secondary'/>} titulo={t('tituloFerramentaDaListagemContato')}/>}
     >
       <Box width='100%' display='flex'>
         <Grid container margin={3} textAlign='center'>
@@ -110,7 +112,7 @@ const Contato = () => {
                 align='center'
                 fontWeight={'400'}
               >
-                Nós estamos aqui para ajudar!
+                {t('nosEstamosAquiParaAjudar')}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={16}>
@@ -119,7 +121,7 @@ const Contato = () => {
                 align='center'
                 fontWeight={'100'}
               >
-                Envie-nos um e-mail a qualquer hora do dia ou da noite:
+                {t('nosEnvieUmEmail')}
               </Typography>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={16} boxShadow=' rgb(38, 57, 77) 0px 20px 30px -10px;'>
                 <form
@@ -151,16 +153,16 @@ const Contato = () => {
                   }
                 >
                   <Typography variant='h6' textAlign='center' margin={2} >
-                    Contato
+                    {t('tituloContato')}
                   </Typography>
 
                   <FormControl variant='outlined' color='secondary'>
-                    <InputLabel className='name'>Nome Completo</InputLabel>
+                    <InputLabel className='name'>{t('nomeCompleto')}</InputLabel>
 
                     <Input
                       className='input'
                       type='text'
-                      placeholder='Digite seu nome'
+                      placeholder={t('digiteSeuNome') || undefined}
                       name='name'
                       onChange={handleChange}
                       required
@@ -170,12 +172,12 @@ const Contato = () => {
                   </FormControl>
 
                   <FormControl variant='outlined' color='secondary'>
-                    <InputLabel className='email'>Email</InputLabel>
+                    <InputLabel className='email'>{t('email')}</InputLabel>
 
                     <Input
                       className='input'
                       type='email'
-                      placeholder='exemplo@gmail.com'
+                      placeholder={t('digiteSeuEmail') || undefined}
                       name='email'
                       onChange={handleChange}
                       required
@@ -187,10 +189,10 @@ const Contato = () => {
                     <TextField
                       required
                       type='text'
-                      placeholder='Digite sua mensagem'
+                      placeholder={t('digiteSuaMensagem')|| undefined}
                       className='message'
                       id='outlined-multiline-static'
-                      label='Mensagem'
+                      label={t('mensagem')}
                       multiline
                       rows={5}
                       name='message'
@@ -214,7 +216,7 @@ const Contato = () => {
                       }
                       endIcon={<SendIcon />}
                     >
-                      Enviar
+                      {t('enviar')}
                     </Button>
                     <Snackbar
                       open={openError}
@@ -236,36 +238,6 @@ const Contato = () => {
               </Grid>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={16}>
-              <Typography
-                variant={smDown ? 'body2' : mdDown ? 'h6' : 'h6'}
-                align='center'
-                fontWeight={'300'}
-              >
-                Faça o download do meu curriculo, para mais informaçoẽs!
-              </Typography>
-              <Grid item margin={4}>
-                <Button
-                  variant='outlined'
-                  color='error'
-                  endIcon={<FileDownloadIcon />}
-                  sx={
-                    smDown
-                      ? { fontSize: 'small' }
-                      : mdDown
-                        ? { fontSize: 'medium' }
-                        : { fontSize: 'large' }
-                  }
-                >
-                  <Link
-                    href={require('./curriculo/EmersonAraujo.pdf')}
-                    download='Desenvolvedor-Emerson-Araújo.pdf'
-                    color='error'
-                    underline="none"
-                  >
-                    Currículo
-                  </Link>
-                </Button>
-              </Grid>
               <Card
                 sx={{
                   display: 'flex',
@@ -276,7 +248,7 @@ const Contato = () => {
               >
                 <Grid item sx={{ align: 'center' }} >
                   <Typography align='center' variant='body1'>
-                    Siga-nos no:
+                    {t('sigaNos')}
                   </Typography>
 
                   <Link
@@ -288,18 +260,6 @@ const Contato = () => {
                       <GitHubIcon
                         fontSize={smDown ? 'small' : 'large'}
                         sx={{ color: '#000000', marginRight: 5 }}
-                      />
-                    </IconButton>
-                  </Link>
-                  <Link
-                    href='https://www.instagram.com/eiemerson._/'
-                    target='_blank'
-                    title='Instagram'
-                  >
-                    <IconButton>
-                      <InstagramIcon
-                        fontSize={smDown ? 'small' : 'large'}
-                        sx={{ color: '#ff0080', marginRight: 5 }}
                       />
                     </IconButton>
                   </Link>

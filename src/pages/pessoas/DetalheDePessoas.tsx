@@ -1,5 +1,6 @@
 import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, LinearProgress, Paper, Snackbar, SnackbarOrigin, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 
@@ -35,6 +36,7 @@ export const DetalheDePessoas: React.FC = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdateError, setOpenUpdateError] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const { t} = useTranslation();
   const [state, setState] = useState<StateDetalhePessoa>({
     open: false,
     vertical: 'top',
@@ -122,8 +124,6 @@ export const DetalheDePessoas: React.FC = () => {
           if (!error.path) return;
           validationErrors[error.path] = error.message;
         });
-
-        console.log(validationErrors);
         formRef.current?.setErrors(validationErrors);
       });
   };
@@ -199,10 +199,10 @@ export const DetalheDePessoas: React.FC = () => {
   };
   return (
     <LayoutBaseDePagina
-      titulo={id === 'nova' ? 'Novo Usuário' : nome}
+      titulo={id === 'nova' ?  t('novoUsuario') : nome}
       barraDeFerramentas={
         <FerramentasDeDetalhes
-          textoBotaoNovo='Nova'
+          textoBotaoNovo={t('textoBotaoNovo')}
           mostrarBotaoSalvarEFechar
           mostrarBotaoApagar={id !== 'nova'}
           mostrarBotaoNovo={id !== 'nova'}
@@ -220,32 +220,32 @@ export const DetalheDePessoas: React.FC = () => {
     >
       <Snackbar  key={vertical + horizontal}  anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={6000} onClose={handleCloseSuccess}>
         <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }} variant='filled'>
-        Usuário excluido com sucesso!
+          {t('usuarioDeletadoComSucesso')}
         </Alert>
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao excluir usuário!
+          {t('erroAoApagarUsuario')}
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorConexao} autoHideDuration={6000} onClose={handleCloseErrorConexao} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseErrorConexao} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro de conexão!
+          {t('erroDeConexao')}
         </Alert>
       </Snackbar>
       <Snackbar open={openUpdate} autoHideDuration={6000} onClose={handleCloseUpdate} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseUpdate} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Usuário atualizado com sucesso!
+          {t('usuarioAtualizadoComSucesso')}
         </Alert>
       </Snackbar>
       <Snackbar open={openUpdateError} autoHideDuration={6000} onClose={handleCloseUpdateError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseUpdateError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao atualizar usuário!
+          {t('erroAoAtualizarUsuario')}
         </Alert>
       </Snackbar>
       <Snackbar open={openCreate} autoHideDuration={6000} onClose={handleCloseCreate} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseCreate} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Usuário criado com sucesso!
+          {t('usuarioCriadoComSucesso')}
         </Alert>
       </Snackbar>
       <VForm ref={formRef} onSubmit={handleSave}>
@@ -263,7 +263,7 @@ export const DetalheDePessoas: React.FC = () => {
               </Grid>
             )}
             <Grid item>
-              <Typography variant='h6'>Geral</Typography>
+              <Typography variant='h6'>{t('geralDetalhe')}</Typography>
             </Grid>
             <Dialog
               open={openDialog}
@@ -271,19 +271,19 @@ export const DetalheDePessoas: React.FC = () => {
               aria-labelledby="responsive-dialog-title"
             >
               <DialogTitle id="responsive-dialog-title">
-                {'Deseja excluir esta cidade?'}
+                {t('desejaApagarEsteUsuario')}
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                Esta operação não poderá ser desfeita. Deseja continuar?
+                  {t('estaOperacaoNaoPoderaSerDesfeita')}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button color='error' autoFocus onClick={handleClose}>
-                  Cancelar
+                  {t('botaoCancelar')}
                 </Button>
                 <Button color='success' onClick={() => handleDelete(id, {vertical: 'top',horizontal: 'right',})} autoFocus>
-                  Apagar
+                  {t('botaoApagar')}
                 </Button>
               </DialogActions>
             </Dialog>
@@ -291,7 +291,7 @@ export const DetalheDePessoas: React.FC = () => {
               <Grid item xs={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
-                  label='Nome Completo'
+                  label={t('nomeCompleto')}
                   name='fullName'
                   disabled={isLoading}
                   color='secondary'
@@ -303,7 +303,7 @@ export const DetalheDePessoas: React.FC = () => {
               <Grid item xs={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
-                  label='E-mail'
+                  label={t('email')}
                   name='email'
                   disabled={isLoading}
                   color='secondary'

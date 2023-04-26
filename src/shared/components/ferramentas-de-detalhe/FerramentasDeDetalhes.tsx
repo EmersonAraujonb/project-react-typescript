@@ -10,9 +10,10 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 interface IFerramentasDeDetalhesProps {
-  textoBotaoNovo?: string;
+  textoBotaoNovo?: any;
   mostrarBotaoVoltar?: boolean;
   mostrarBotaoApagar?: boolean;
   mostrarBotaoSalvar?: boolean;
@@ -55,6 +56,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const theme = useTheme();
+  const {t} = useTranslation();
 
   return (
     <Box
@@ -84,7 +86,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             fontSize={smDown ? 8 : mdDown ? 12 : 14}
 
           >
-            Salvar
+            {t('salvar')}
           </Typography>
         </Button>
       )}
@@ -107,7 +109,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             fontSize={smDown ? 8 : mdDown ? 12 : 14}
 
           >
-            Salvar e fechar
+            {t('salvarEFechar')}
           </Typography>
         </Button>
       )}
@@ -131,7 +133,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             fontSize={smDown ? 8 : mdDown ? 12 : 14}
 
           >
-            Apagar
+            {t('botaoApagar')}
           </Typography>
         </Button>
       )}
@@ -179,7 +181,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             overflow="hidden"
             fontSize={smDown ? 8 : mdDown ? 12 : 14}
           >
-            Voltar
+            {t('voltar')}
           </Typography>
         </Button>
       )}

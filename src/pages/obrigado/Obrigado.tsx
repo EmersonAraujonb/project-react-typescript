@@ -9,9 +9,11 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useTranslation } from 'react-i18next';
 
 
 const Obrigado = () => {
+  const {t} = useTranslation();
   return (
     <Box width='100%' display='flex'>
       <Grid container margin={3} textAlign='center'>
@@ -28,7 +30,7 @@ const Obrigado = () => {
               <CardContent>
                 <ImageListItem sx={{ marginBottom: 2 }}>
                   <Typography>
-                    Obrigado por entrar em contato conosco.
+                    {t('obrigadoPelaMensagem')}
                   </Typography>
                 </ImageListItem>
                 <Button variant="contained" color='error' startIcon={<ArrowBackIcon />}>

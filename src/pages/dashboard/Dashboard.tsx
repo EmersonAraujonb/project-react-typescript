@@ -31,48 +31,12 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
 import { Chart } from 'react-google-charts';
-import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 export interface SState extends SnackbarOrigin {
   open: boolean;
 }
-export const data = [
-  ['Estado', 'Municípios', 'Regiões Administrativas'],
-  ['Acre', 22, 0],
-  ['Alagoas', 102, 0],
-  ['Amazonas', 62, 0],
-  ['Amapá', 16, 0],
-  ['Bahia', 417, 0],
-  ['Ceará', 184, 0],
-  ['Distrito Federal', 0, 33],
-  ['Espírito Santo', 78, 0],
-  ['Goiás', 246, 0],
-  ['Maranhão', 217, 0],
-  ['Minas Gerais', 853, 0],
-  ['Mato Grosso do Sul', 79, 0],
-  ['Mato Grosso', 141, 0],
-  ['Pará', 144, 0],
-  ['Paraíba', 223, 0],
-  ['Pernambuco', 185, 0],
-  ['Piauí', 224, 0],
-  ['Paraná', 399, 0],
-  ['Rio de Janeiro', 92, 0],
-  ['Rio Grande do Norte', 167, 0],
-  ['Rondônia', 52, 0],
-  ['Roraima', 15, 0],
-  ['Rio Grande do Sul', 497, 0],
-  ['Santa Catarina', 295, 0],
-  ['Sergipe', 75, 0],
-  ['São Paulo', 645, 0],
-  ['Tocantins', 139, 0],
-];
 
-export const options = {
-  vAxis: { title: 'Estados' },
-  hAxis: { title: 'Municípios / Regiões Administrativas ' },
-  series: { 5: { type: 'bar' } },
-  legend: { position: 'top' }
-};
 export const Dashboard = () => {
   const [isLoadingCidades, setIsLoadingCidades] = useState(true);
   const [isLoadingPessoas, setIsLoadingPessoas] = useState(true);
@@ -82,6 +46,7 @@ export const Dashboard = () => {
   const [cities, setCities] = useState<any>();
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [openErrorConexao, setOpenErrorConexao] = useState(false);
+  const { t } = useTranslation();
   const [state, setState] = useState<SState>({
     open: false,
     vertical: 'top',
@@ -89,7 +54,45 @@ export const Dashboard = () => {
   });
   const { vertical, horizontal } = state;
   const navigate = useNavigate();
-  
+
+  const data = [
+    [t('graficoEstado'), t('graficoMunicipios'), t('graficoRegioesAdministrativas')],
+    ['Acre', 22, 0],
+    ['Alagoas', 102, 0],
+    ['Amazonas', 62, 0],
+    ['Amapá', 16, 0],
+    ['Bahia', 417, 0],
+    ['Ceará', 184, 0],
+    ['Distrito Federal', 0, 33],
+    ['Espírito Santo', 78, 0],
+    ['Goiás', 246, 0],
+    ['Maranhão', 217, 0],
+    ['Minas Gerais', 853, 0],
+    ['Mato Grosso do Sul', 79, 0],
+    ['Mato Grosso', 141, 0],
+    ['Pará', 144, 0],
+    ['Paraíba', 223, 0],
+    ['Pernambuco', 185, 0],
+    ['Piauí', 224, 0],
+    ['Paraná', 399, 0],
+    ['Rio de Janeiro', 92, 0],
+    ['Rio Grande do Norte', 167, 0],
+    ['Rondônia', 52, 0],
+    ['Roraima', 15, 0],
+    ['Rio Grande do Sul', 497, 0],
+    ['Santa Catarina', 295, 0],
+    ['Sergipe', 75, 0],
+    ['São Paulo', 645, 0],
+    ['Tocantins', 139, 0],
+  ];
+
+  const options = {
+    vAxis: { title: t('graficoTituloEstados') },
+    hAxis: { title: t('graficoTituloMunicipios/RegioesAdministrativas') },
+    series: { 5: { type: 'bar' } },
+    legend: { position: 'top' },
+  };
+
   useEffect(() => {
     setIsLoadingPessoas(true);
     setIsLoadingCidades(true);
@@ -122,7 +125,6 @@ export const Dashboard = () => {
         </Typography>
       ));
       return setPeoples(data.reverse().slice(0, 5));
-   
     };
     fetchData();
   }, []);
@@ -155,12 +157,12 @@ export const Dashboard = () => {
   };
   return (
     <LayoutBaseDePagina
-      titulo='Página Inicial'
+      titulo={t('tituloPrincipal')}
       barraDeFerramentas={
         <FerramentasDaListagem
           mostrarBotaoNovo={false}
           icone={<HomeIcon color='secondary' />}
-          titulo='/ Estatísticas'
+          titulo={t('tituloFerramentaDaListagemDashboard')}
         />
       }
     >
@@ -176,7 +178,7 @@ export const Dashboard = () => {
           sx={{ width: '100%' }}
           variant='filled'
         >
-          Erro de conexão!
+          {t('erroDeConexao')}
         </Alert>
       </Snackbar>
       <Box width='100%' display='flex'>
@@ -184,9 +186,8 @@ export const Dashboard = () => {
           <Grid item container spacing={2}>
             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
               <Card
-               
                 sx={{
-                  height:345,
+                  height: 345,
                   borderRadius: '20px',
                   boxShadow:
                     'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
@@ -196,7 +197,7 @@ export const Dashboard = () => {
                 <CardContent>
                   <GroupsIcon sx={{ marginLeft: '45%', fontSize: 40 }} />
                   <Typography variant='h5' align='center' fontWeight='900'>
-                    Total de pessoas
+                    {t('totalDePessoas')}
                   </Typography>
 
                   <Box
@@ -226,19 +227,18 @@ export const Dashboard = () => {
             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
               <Card
                 sx={{
-                  height:345,
+                  height: 345,
                   borderRadius: '20px',
                   boxShadow:
                     'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
                   background: 'linear-gradient(to right,#196a92,#19d866)',
                 }}
-               
               >
                 <CardContent>
                   <LocationCityIcon sx={{ marginLeft: '45%', fontSize: 40 }} />
 
                   <Typography variant='h5' align='center' fontWeight='900'>
-                    Total de Cidades
+                    {t('totalDeCidades')}
                   </Typography>
                   <Box
                     padding={6}
@@ -278,7 +278,7 @@ export const Dashboard = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell align='center' colSpan={3}>
-                            Ultimas pessoas cadastradas
+                            {t('ultimasPessoasCadastradas')}
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -293,8 +293,11 @@ export const Dashboard = () => {
                             >
                               {peoples}
                               <br />
-                              {!isLoadingPessoas &&  <Button  onClick={() => navigate('/pessoas')}>Ver mais...</Button>}
-                             
+                              {!isLoadingPessoas && (
+                                <Button onClick={() => navigate('/pessoas')}>
+                                  {t('botaoVerMais')}
+                                </Button>
+                              )}
                             </Box>
                           </TableCell>
                         </TableRow>
@@ -325,12 +328,12 @@ export const Dashboard = () => {
                 }}
               >
                 <CardContent>
-                  <TableContainer component={Paper} variant='elevation' >
+                  <TableContainer component={Paper} variant='elevation'>
                     <Table>
                       <TableHead>
                         <TableRow>
                           <TableCell align='center' colSpan={3}>
-                            Ultimas cidades cadastradas
+                            {t('ultimasCidadesCadastradas')}
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -345,7 +348,11 @@ export const Dashboard = () => {
                             >
                               {cities}
                               <br />
-                              {!isLoadingCidades &&  <Button  onClick={() => navigate('/cidades')}>Ver mais...</Button>}
+                              {!isLoadingCidades && (
+                                <Button onClick={() => navigate('/cidades')}>
+                                  {t('botaoVerMais')}
+                                </Button>
+                              )}
                             </Box>
                           </TableCell>
                         </TableRow>

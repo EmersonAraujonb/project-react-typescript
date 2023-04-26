@@ -1,6 +1,8 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Alert,
+  AppBar,
+  Avatar,
   Box,
   Button,
   Card,
@@ -9,20 +11,74 @@ import {
   CardMedia,
   CircularProgress,
   FormControl,
+  FormControlLabel,
   IconButton,
   Input,
   InputAdornment,
   InputLabel,
   Link,
+  Menu,
   Snackbar,
   SnackbarOrigin,
+  styled,
+  Switch,
   Theme,
+  Toolbar,
   Typography,
   useMediaQuery,
 } from '@mui/material';
 import { useContext, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { LanguageSwitcher } from '../../shared/components/languageSwitcher';
 import { AuthGoogleContext } from '../../shared/contexts/AuthGoogle';
+import LanguageIcon from '@mui/icons-material/Language';
+import { useTranslation } from 'react-i18next';
+import { useThemeContext } from '../../shared/contexts';
+
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase': {
+    margin: 1,
+    padding: 2,
+    transform: 'translateX(6px)',
+    '&.Mui-checked': {
+      color: '#fff',
+      transform: 'translateX(22px)',
+      '& .MuiSwitch-thumb:before': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+          '#fff'
+        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
+      },
+      '& + .MuiSwitch-track': {
+        opacity: 1,
+        backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+      },
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
+    width: 28,
+    height: 28,
+    '&:before': {
+      content: '""',
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      left: 0,
+      top: 0,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+        '#fff'
+      )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
+    },
+  },
+  '& .MuiSwitch-track': {
+    opacity: 1,
+    backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+    borderRadius: 20 / 2,
+  },
+}));
+
 export interface StateCreateCountUser extends SnackbarOrigin {
   open: boolean;
 }
@@ -50,7 +106,23 @@ export const Login = () => {
     vertical: 'top',
     horizontal: 'right',
   });
+
   const { vertical, horizontal, open } = state;
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { t } = useTranslation();
+  const flag = sessionStorage.getItem('flag');
+  const us = '../../../estados-unidos-da-america.png';
+  const { changeTheme } = useThemeContext();
+  const active = sessionStorage.getItem('theme');
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -61,19 +133,22 @@ export const Login = () => {
   async function loginGooogle() {
     await signInGoogle();
   }
-  
+  function toggleButton(): boolean | undefined {
+    if (active === 'dark') return true;
+    return false;
+  }
+
   async function signUser() {
-    if(!signed){
+    if (!signed) {
       await sign(email, password);
       setOpenErrors(true);
-      setIsLoading(true);      
-    } 
+      setIsLoading(true);
+    }
     if (openErrors) {
       setOpenErrors(false);
       setIsLoading(false);
       console.log('error');
     }
-    
   }
   const handleCloseError = (
     event?: React.SyntheticEvent | Event,
@@ -88,135 +163,196 @@ export const Login = () => {
 
   if (!signed) {
     return (
-      <Box
-        sx={{
-          width: '100%',
-          height: '100%',
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <Snackbar
-          open={openErrors}
-          autoHideDuration={6000}
-          onClose={handleCloseError}
-          anchorOrigin={{ vertical, horizontal }}
+      <>
+        <Box>
+          <AppBar position='fixed' color='default'>
+            <Toolbar sx={{justifyContent: 'space-between'}}>
+              <FormControlLabel
+                checked={toggleButton()}
+                onClick={changeTheme}
+                sx={{ display: 'flex', margin: -3 }}
+                control={<MaterialUISwitch sx={{ m: 1 }} />}
+                title={t('tituloTrocaDeTema') || undefined}
+                label=''
+              />
+              {auth && (
+                <Box display='flex' justifyContent='center' alignItems='center'>
+                  <img
+                    title={t('idioma')|| undefined}
+                    src={flag || us}
+                    onClick={handleMenu}
+                    style={ smDown ? { width: 30, display:'flex', marginRight: 20, cursor: 'pointer' }: { width: 40, display:'flex', marginRight: 30, cursor: 'pointer' }}
+                  />
+                  <Menu
+                    id='menu-appbar'
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <LanguageSwitcher />
+                  </Menu>
+                </Box>
+              )}
+            </Toolbar>
+          </AppBar>
+        </Box>
+        <Box
+          sx={{
+            width: '100%',
+            height: '100%',
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
         >
-          <Alert
+          <Snackbar
+            open={openErrors}
+            autoHideDuration={6000}
             onClose={handleCloseError}
-            severity='error'
-            sx={{ width: '100%' }}
-            variant='filled'
+            anchorOrigin={{ vertical, horizontal }}
           >
-            {openError}
-          </Alert>
-        </Snackbar>
-        <Card
-          sx={smDown ? { maxWidth: 300 } : { maxWidth: 645, marginLeft: -27 }}
-        >
-          <CardMedia
-            component='img'
-            height={smDown ? 105 : mdDown ? 160: 210}
-            image='../../../logo.png'
-            alt='logo-web-cadastro'
-          />
-          <CardContent>
-            <Box
-              display='flex'
-              flexDirection='column'
-              gap={2}
-              width={smDown ? 270: mdDown ? 350 : 450}
+            <Alert
+              onClose={handleCloseError}
+              severity='error'
+              sx={{ width: '100%' }}
+              variant='filled'
             >
-              <Typography variant='h6' textAlign='center'>
-                Acesse sua conta
-              </Typography>
-              <Typography variant='body2' color='text.secondary'>
-                Faça login na sua conta e aproveite ao máximo todos os serviços
-                disponíveis.
-              </Typography>
-              
-              <FormControl variant='outlined' color='secondary' >
-                <InputLabel htmlFor='standard-adornment-email'>
-                  Email
-                </InputLabel>
-                <Input
-                  type='email'
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder='exemplo@gmail.com'
-                  disabled={isLoading && !openError}
-                  required
-                />
-              </FormControl>
-              <FormControl variant='outlined' color='secondary'>
-                <InputLabel className='password'>
-                  Senha
-                </InputLabel>
-                <Input
-                  required
-                  type={showPassword ? 'text' : 'password'}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder='******'
-                  disabled={isLoading && !openError}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        aria-label='toggle password visibility'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
+              {openError}
+            </Alert>
+          </Snackbar>
+
+          <Card
+            sx={
+              smDown
+                ? { maxWidth: 300, marginTop: 5 }
+                : mdDown
+                  ? { marginTop: 5, marginLeft: -27 }
+                  : { maxWidth: 645, marginLeft: -27 }
+            }
+          >
+            <CardMedia
+              component='img'
+              height={smDown ? 105 : mdDown ? 160 : 210}
+              image='../../../logo.png'
+              alt='logo-web-cadastro'
+            />
+            <CardContent>
+              <Box
+                display='flex'
+                flexDirection='column'
+                gap={2}
+                width={smDown ? 270 : mdDown ? 350 : 450}
+              >
+                <Typography variant='h6' textAlign='center'>
+                  {t('acesseSuaConta')}
+                </Typography>
+                <Typography variant='body2' color='text.secondary'>
+                  {t('descricaoAreaLogin')}
+                </Typography>
+
+                <FormControl variant='outlined' color='secondary'>
+                  <InputLabel htmlFor='standard-adornment-email'>
+                    {t('email')}
+                  </InputLabel>
+                  <Input
+                    type='email'
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={t('digiteSeuEmail') || undefined}
+                    disabled={isLoading && !openError}
+                    required
+                  />
+                </FormControl>
+                <FormControl variant='outlined' color='secondary'>
+                  <InputLabel className='password'>{t('senha')}</InputLabel>
+                  <Input
+                    required
+                    type={showPassword ? 'text' : 'password'}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder='******'
+                    disabled={isLoading && !openError}
+                    endAdornment={
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Box>
+            </CardContent>
+            <CardActions>
+              <Box width='100%' display='flex' justifyContent='center'>
+                <Button
+                  sx={
+                    smDown
+                      ? { fontSize: 12, padding: 1.3, borderRadius: 3 }
+                      : { fontSize: 14, padding: 1.3, borderRadius: 3 }
                   }
-                />
-              </FormControl>
-            </Box>
-          </CardContent>
-          <CardActions>
-            <Box width='100%' display='flex' justifyContent='center'>
-              <Button
-                sx={smDown ? { fontSize: 12, padding: 1.3, borderRadius: 3 } : { fontSize: 14, padding: 1.3, borderRadius: 3}}
-                variant='contained'
-                color='info'
-                onClick={() => 
-                  signUser()
-                }
-                endIcon={isLoading && !openError ? <CircularProgress variant='indeterminate'size={20} color='inherit'/> : undefined}
-              >
-                Login
-              </Button>
-            </Box>
-          </CardActions>
-          <CardActions>
-            <Box width='100%' display='flex' justifyContent='center'>
-              <Button
-                sx={smDown ? { fontSize: 12, padding: 1.3, borderRadius: 3 } : { fontSize: 14, padding: 1.3, borderRadius: 3}}
-                variant='contained'
-                color='error'
-                onClick={() => loginGooogle()}
-              >
-                Entrar com Google
-              </Button>
-            </Box>
-          </CardActions>
-          <CardActions>
-            <Box width='100%' display='flex' justifyContent='center'>
-              <Typography>
-                Náo tem uma conta?
-                <Link
-                  color='error'
-                  underline='hover'
-                  href='/cadastro'
-                  style={{ marginLeft: 5 }}
+                  variant='contained'
+                  color='info'
+                  onClick={() => signUser()}
+                  endIcon={
+                    isLoading && !openError ? (
+                      <CircularProgress
+                        variant='indeterminate'
+                        size={20}
+                        color='inherit'
+                      />
+                    ) : undefined
+                  }
                 >
-                  Criar conta
-                </Link>
-              </Typography>
-            </Box>
-          </CardActions>
-        </Card>
-      </Box>
+                  {t('login')}
+                </Button>
+              </Box>
+            </CardActions>
+            <CardActions>
+              <Box width='100%' display='flex' justifyContent='center'>
+                <Button
+                  sx={
+                    smDown
+                      ? { fontSize: 12, padding: 1.3, borderRadius: 3 }
+                      : { fontSize: 14, padding: 1.3, borderRadius: 3 }
+                  }
+                  variant='contained'
+                  color='error'
+                  onClick={() => loginGooogle()}
+                >
+                  {t('loginGoogle')}
+                </Button>
+              </Box>
+            </CardActions>
+            <CardActions>
+              <Box width='100%' display='flex' justifyContent='center'>
+                <Typography>
+                  {t('naoTemUmaConta')}
+                  <Link
+                    color='error'
+                    underline='hover'
+                    href='/cadastro'
+                    style={{ marginLeft: 5 }}
+                  >
+                    {t('criarConta')}
+                  </Link>
+                </Typography>
+              </Box>
+            </CardActions>
+          </Card>
+        </Box>
+      </>
     );
   } else {
     return <Navigate to='/pagina-inicial' />;

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import {
   Dashboard,
@@ -17,32 +18,34 @@ import { PrivateRoutes, PrivateRoutesRegister } from './privateRoutes';
 
 export const AppRoutes = () => {
   const { setDrawerOptions } = useDrawerContext();
+  const {t} = useTranslation();
+
 
   useEffect(() => {
     setDrawerOptions([
       {
-        label: 'Inicio',
+        label: t('menuLateralInicio'),
         icon: 'home',
         path: '/pagina-inicial',
         
       },
       {
-        label: 'Pessoas',
+        label: t('menuLateralPessoas'),
         icon: 'people',
         path: '/pessoas',
       },
       {
-        label: 'Cidades',
+        label: t('menuLateralCidades'),
         icon: 'location_city',
         path: '/cidades',
       },
       {
-        label: 'Contato',
+        label: t('menuLateralContato'),
         icon: 'contact_support',
         path: '/contato',
       },
       {
-        label: 'Sobre',
+        label: t('menuLateralSobre'),
         icon: 'info_icon',
         path: '/sobre',
       },    

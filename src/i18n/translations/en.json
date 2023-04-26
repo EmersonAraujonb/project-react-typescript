@@ -1,0 +1,131 @@
+{
+    "translation": {
+        "tituloPrincipal": "Dashboard",
+        "tituloFerramentaDaListagemDashboard": "/ Statistics",
+        "erroDeConexao": "Connection error!",
+        "totalDePessoas":"Total People",
+        "totalDeCidades": "Total Cities",
+        "ultimasPessoasCadastradas": "Last People Registered",
+        "ultimasCidadesCadastradas": "Last Registered Cities",
+        "botaoVerMais": "View more",
+        "graficoEstado": "State",
+        "graficoMunicipios": "Counties",
+        "graficoRegioesAdministrativas": "Administrative Regions",
+        "graficoTituloEstados": "States",
+        "graficoTituloMunicipios/RegioesAdministrativas": " Counties / Administrative Regions",
+        "tituloConfiguracoesDoUsuario": "Settings",
+        "tituloTrocaDeTema": "Theme change",
+        "botaoLogout": "Logout",
+        "menuLateralInicio": "Home",
+        "menuLateralPessoas": "People",
+        "menuLateralCidades": "Cities",
+        "menuLateralContato": "Contact",
+        "menuLateralSobre": "About",
+        "tituloListagemDePessoas": "People List",
+        "textoBotaoNovo": "New",
+        "usuarioDeletadoComSucesso":"User deleted successfully",
+        "erroAoApagarUsuario": "Error deleting user",
+        "nomeCompleto": "Full name",
+        "email": "E-mail",
+        "acoes": "Actions",
+        "desejaApagarEsteUsuario": "Do you want to delete this user?",
+        "estaOperacaoNaoPoderaSerDesfeita": "This operation cannot be undone. Do you wish to continue?",
+        "botaoCancelar":"Cancel",
+        "botaoApagar":"Delete",
+        "usuarioAtualizadoComSucesso": "User updated successfully!",
+        "erroAoAtualizarUsuario": "Error updating user!",
+        "usuarioCriadoComSucesso": "User successfully created!",
+        "novoUsuario":"New user",
+        "geralDetalhe": "General",
+        "cidade": "City",
+        "hoverAbrir": "Open",
+        "hiverFechar": "Close",
+        "limparCampo": "Clear",
+        "campoOpcoes": "No Options",
+        "carregando": "Loading...",
+        "salvar": "Save",
+        "salvarEFechar": "Save and Close",
+        "apagar": "Delete",
+        "voltar": "Back",
+        "tituloListagemDeCidades": "List of Cities",
+        "cidadeDeletadaComSucesso": "City deleted successfully!",
+        "erroAoApagarCidade": "Error deleting city!",
+        "estado": "State",
+        "desejaApagarEstaCidade": "Do you want to delete this city?",
+        "novaCidade": "New city",
+        "cidadeAtualizadaComSucesso": "City updated successfully!",
+        "erroAoAtualizarCidade": "Error updating city!",
+        "cidadeCriadaComSucesso": "City successfully created!",
+        "tituloFerramentaDaListagemContato": "/ Contact",
+        "tituloContato": "Contact",
+        "nosEstamosAquiParaAjudar": "We are here to help!",
+        "nosEnvieUmEmail": "Email us anytime, day or night:",
+        "digiteSeuNome": "Type your name...",
+        "digiteSeuEmail": "example@gmail.com",
+        "mensagem": "Message",
+        "digiteSuaMensagem": "enter your message",
+        "mensagemFormulario": "An error occured when submitting the form",
+        "enviar": "Send",
+        "sigaNos": "Follow us:",
+        "tituloSobre": "About Web Cadastro",
+        "tituloBarraDeFerramentasSobre": "/ About",
+        "umObjetivoSimples": "A simple goal; simplify the creation of users and cities.",
+        "texto1": "We started the Cadastro Web to simplify the authoring experience and empower users to edit regularly. Best of all? We do this seamlessly, which means no spam and definitely no unwanted calls, as we don't even ask for your phone number (unlike other web sites...).",
+        "missao": "Mission",
+        "texto2": "Create users and cities easily and quickly!",
+        "crieSemMedo": "create without fear",
+        "texto3": "We have determination. There is no job too small or challenge impossible. We are together and we go with everything. We think about the long term and we always optimize thinking about the Web Cadastro as a whole. We never say that's not my job.",
+        "texto4": "We have a predisposition for action and value risk taking in a courageous and calculated way. We move quickly and do not keep the customer waiting. When we fail, we learn from it and try again.",
+        "selecioneUmaLinguagem": "Select your language:",
+        "idioma": "Language",
+        "acesseSuaConta": "Access your account",
+        "descricaoAreaLogin":"Log in to your account and make the most of all available services.",
+        "senha": "Password",
+        "login": "Sign in",
+        "loginGoogle": "Sign in with Google",
+        "naoTemUmaConta":"Don't have an account?",
+        "criarConta":"Create account",
+        "cadastre-se": "Register",
+        "jaTemUmaConta":"Already have an account?",
+        "obrigadoPelaMensagem": "Thank you for contacting us.",
+        "bemVindo": "Welcome!",
+        "ola": "Hello",
+        "usuarioDoEmail":"email user:",
+        "obrigadoPorVisitarAPagina":"! Thanks for visiting the page",
+        "oEnderecoDeEmailNaoEValido":"The email address is not valid.",
+        "asSolicitacoesForamBloqueadas":"Requests were blocked due to unusual activity. Try again after some time.",
+        "senhaIncorreta": "Incorrect password",
+        "erroInesperado": "The authentication server encountered an unexpected error while trying to process the request.",
+        "senhaMuitoFraca":"The password is too weak.",
+        "emailObrigatorio":"Email is required!",
+        "aSenhaPrecisaTerPeloMenosSeisCaracteres": "Password is invalid, must be at least 6 characters long",
+        "usuarioNaoExiste": "User does not exist.",
+        "jaExisteUmaContaComEsseEmail":"An account with the provided email address already existed.",
+        "jaExisteUmaContaParaEstaCredencial":"An account already exists for this credential."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    }
+}

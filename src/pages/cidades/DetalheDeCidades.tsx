@@ -1,5 +1,6 @@
 import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, LinearProgress, Paper, Snackbar, SnackbarOrigin, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 
@@ -32,6 +33,7 @@ export const DetalheDeCidades: React.FC = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdateError, setOpenUpdateError] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const {t} = useTranslation();
   const [state, setState] = useState<StateDetalheCidade>({
     open: false,
     vertical: 'top',
@@ -122,8 +124,6 @@ export const DetalheDeCidades: React.FC = () => {
           if (!error.path) return;
           validationErrors[error.path] = error.message;
         });
-
-        console.log(validationErrors);
         formRef.current?.setErrors(validationErrors);
       });
   };
@@ -200,10 +200,10 @@ export const DetalheDeCidades: React.FC = () => {
 
   return (
     <LayoutBaseDePagina
-      titulo={id === 'nova' ? 'Nova Cidade' : city}
+      titulo={id === 'nova' ? t('novaCidade') : city}
       barraDeFerramentas={
         <FerramentasDeDetalhes
-          textoBotaoNovo='Nova'
+          textoBotaoNovo={t('textoBotaoNovo')}
           mostrarBotaoSalvarEFechar
           mostrarBotaoApagar={id !== 'nova'}
           mostrarBotaoNovo={id !== 'nova'}
@@ -221,32 +221,32 @@ export const DetalheDeCidades: React.FC = () => {
     >
       <Snackbar  key={vertical + horizontal}  anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={6000} onClose={handleCloseSuccess}>
         <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Cidade excluida com sucesso!
+          {t('cidadeDeletadaComSucesso')}
         </Alert>
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao excluir cidade!
+          {t('erroAoApagarCidade')}
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorConexao} autoHideDuration={6000} onClose={handleCloseErrorConexao} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseErrorConexao} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro de conexão!
+          {t('erroDeConexao')}
         </Alert>
       </Snackbar>
       <Snackbar open={openUpdate} autoHideDuration={6000} onClose={handleCloseUpdate} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseUpdate} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Cidade atualizada com sucesso!
+          {t('cidadeAtualizadaComSucesso')}
         </Alert>
       </Snackbar>
       <Snackbar open={openUpdateError} autoHideDuration={6000} onClose={handleCloseUpdateError} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseUpdateError} severity="error" sx={{ width: '100%' }} variant='filled'>
-          Erro ao atualizar cidade!
+          {t('erroAoAtualizarCidade')}
         </Alert>
       </Snackbar>
       <Snackbar open={openCreate} autoHideDuration={6000} onClose={handleCloseCreate} anchorOrigin={{vertical, horizontal}}>
         <Alert onClose={handleCloseCreate} severity="success" sx={{ width: '100%' }} variant='filled'>
-          Cidade criada com sucesso!
+          {t('cidadeCriadaComSucesso')}
         </Alert>
       </Snackbar>
       <VForm ref={formRef} onSubmit={handleSave}>
@@ -264,7 +264,7 @@ export const DetalheDeCidades: React.FC = () => {
               </Grid>
             )}
             <Grid item>
-              <Typography variant='h6'>Geral</Typography>
+              <Typography variant='h6'>{t('geralDetalhe')}</Typography>
             </Grid>
             <Dialog
               open={openDialog}
@@ -272,19 +272,19 @@ export const DetalheDeCidades: React.FC = () => {
               aria-labelledby="responsive-dialog-title"
             >
               <DialogTitle id="responsive-dialog-title">
-                {'Deseja excluir esta cidade?'}
+                {t('desejaApagarEstaCidade')}
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                Esta operação não poderá ser desfeita. Deseja continuar?
+                  {t('estaOperacaoNaoPoderaSerDesfeita')}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button color='error' autoFocus onClick={handleClose}>
-                  Cancelar
+                  {t('botaoCancelar')}
                 </Button>
                 <Button color='success' onClick={() => handleDelete(id, {vertical: 'top',horizontal: 'right'})} autoFocus>
-                  Apagar
+                  {t('botaoApagar')}
                 </Button>
               </DialogActions>
             </Dialog>
@@ -292,7 +292,7 @@ export const DetalheDeCidades: React.FC = () => {
               <Grid item xs={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
-                  label='Cidade'
+                  label={t('cidade')}
                   name='city'
                   disabled={isLoading}
                   color='secondary'
@@ -304,7 +304,7 @@ export const DetalheDeCidades: React.FC = () => {
               <Grid item xs={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
-                  label='Estado'
+                  label={t('estado')}
                   name='state'
                   disabled={isLoading}
                   color='secondary'
