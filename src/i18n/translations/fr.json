@@ -100,7 +100,9 @@
         "aSenhaPrecisaTerPeloMenosSeisCaracteres": "Le mot de passe n'est pas valide, doit comporter au moins 6 caractères",
         "usuarioNaoExiste": "L'utilisateur n'existe pas.",
         "jaExisteUmaContaComEsseEmail":"Un compte avec l'adresse e-mail fournie existait déjà.",
-        "jaExisteUmaContaParaEstaCredencial":"Un compte existe déjà pour cet identifiant."
+        "jaExisteUmaContaParaEstaCredencial":"Un compte existe déjà pour cet identifiant.",
+        "nenhumaPessoaCadastrada": "Personne n'est inscrit!",
+        "nenhumaCidadeCadastrada": "Aucune ville enregistrée!"
 
 
 

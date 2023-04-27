@@ -14,6 +14,7 @@ import {
 
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useDrawerContext } from '../../contexts';
 const languagesOptions = [
   {
     name: 'Portuguese',
@@ -33,6 +34,8 @@ const languagesOptions = [
 ];
 export const LanguageSwitcher = () => {
   const { t, i18n } = useTranslation();
+  const { drawerOptions } = useDrawerContext();
+
   return (
     <Box>
       <List
@@ -53,7 +56,6 @@ export const LanguageSwitcher = () => {
                 i18n.changeLanguage(languageOption.value);
                 sessionStorage.setItem('language', languageOption.value);
                 sessionStorage.setItem('flag', languageOption.flag);
-                document.location.reload();
               }}
             >
               <ListItemIcon>

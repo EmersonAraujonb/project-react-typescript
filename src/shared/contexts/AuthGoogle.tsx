@@ -37,7 +37,7 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
     };
 
     loadStoreAuth();
-  }, [email, password, openError, createUser]);
+  }, [email, password, openError, createUser, t]);
 
   const signInGoogle = () => {
     signInWithPopup(auth, provider)
@@ -50,7 +50,7 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
         sessionStorage.setItem('User', JSON.stringify(user));
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
   const sign = () => {
@@ -65,7 +65,7 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        console.log(error);
+        // console.log(error);
         if (errorCode == 'auth/too-many-requests') {
           return setOpenError(t('asSolicitacoesForamBloqueadas'));
         } else if (errorCode == 'auth/invalid-email') {
@@ -98,7 +98,7 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        console.log(error);
+        // console.log(error);
         if (errorCode == 'auth/email-already-in-use') {
           return setOpenError(t('jaExisteUmaContaComEsseEmail'));
         } else if (errorCode == 'auth/invalid-email') {

@@ -50,7 +50,7 @@ export const AppRoutes = () => {
         path: '/sobre',
       },    
     ]);
-  }, []);
+  }, [t]);
   return (
     <Routes>
       <Route path='/' element={<Login />} />
@@ -58,7 +58,7 @@ export const AppRoutes = () => {
         <Route path='/cadastro' element={<Cadastro />} />
       </Route>
       <Route path='/pagina-inicial' element={<PrivateRoutes />}>
-        <Route path='/pagina-inicial' element={<Dashboard />} />
+        <Route path='/pagina-inicial' element={ <Dashboard />} />
       </Route>
       <Route path='/pessoas/detalhe/:id' element={<PrivateRoutes />}>
         <Route path='/pessoas/detalhe/:id' element={<DetalheDePessoas />} />

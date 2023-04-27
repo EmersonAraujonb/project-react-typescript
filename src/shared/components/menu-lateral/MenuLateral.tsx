@@ -13,11 +13,9 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import { useDrawerContext } from '../../contexts';
 import { AuthGoogleContext } from '../../contexts/AuthGoogle';
-import { LanguageSwitcher } from '../languageSwitcher';
 
 interface IChildren {
   children?: React.ReactNode;
@@ -61,8 +59,8 @@ export const MenuLateral: React.FC<IChildren> = ({ children }) => {
   const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
   const dados: any = sessionStorage.getItem('User');
   const { signOut }: any = useContext(AuthGoogleContext);
-  const {t} = useTranslation();
   const image = '../../../logo.png';
+  
 
   return (
     <>

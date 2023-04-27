@@ -144,10 +144,9 @@ export const Login = () => {
       setOpenErrors(true);
       setIsLoading(true);
     }
-    if (openErrors) {
+    if ( signed) {
       setOpenErrors(false);
       setIsLoading(false);
-      console.log('error');
     }
   }
   const handleCloseError = (
@@ -264,6 +263,7 @@ export const Login = () => {
                     {t('email')}
                   </InputLabel>
                   <Input
+                    error={openErrors}
                     type='email'
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t('digiteSeuEmail') || undefined}
@@ -274,6 +274,7 @@ export const Login = () => {
                 <FormControl variant='outlined' color='secondary'>
                   <InputLabel className='password'>{t('senha')}</InputLabel>
                   <Input
+                    error={openErrors}
                     required
                     type={showPassword ? 'text' : 'password'}
                     onChange={(e) => setPassword(e.target.value)}
@@ -286,7 +287,7 @@ export const Login = () => {
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
                         >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
                         </IconButton>
                       </InputAdornment>
                     }

@@ -20,7 +20,7 @@ type TPessoasComTotalCount = {
 };
 
 const getAll = async (
-  page= 10,
+  page= 1,
   search = ''
 ): Promise<TPessoasComTotalCount | Error> => {
   try {

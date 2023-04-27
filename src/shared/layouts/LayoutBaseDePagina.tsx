@@ -109,7 +109,7 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
       backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
       width: smDown ? 20 : 28,
       height: smDown ? 20 : 28,
-      marginTop: smDown ? 6 : 0,
+      marginTop: smDown ? 3 : 0,
       
       '&:before': {
         content: '""',
@@ -126,7 +126,7 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
       },
     },
     width: smDown ? 50 : undefined,
-    height: smDown ? 38 : undefined,
+    height: smDown ? '35%' : undefined,
     '& .MuiSwitch-track': {
       opacity: 1,
       backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
@@ -186,6 +186,7 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePagina> = ({
         <Box display='flex'>
           <Box display='flex' justifyContent='end' alignItems='center'>
             <img
+              
               src={flag || us}
               onClick={handleMenu}
               style={ smDown ? { width: 30, display:'flex', marginRight: 20, cursor: 'pointer' }: { width: 40, display:'flex', marginRight: 30, cursor: 'pointer' }}

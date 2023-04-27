@@ -293,10 +293,13 @@ export const Dashboard = () => {
                             >
                               {peoples}
                               <br />
-                              {!isLoadingPessoas && (
+                              {!isLoadingPessoas && totalCountPessoas != 0 && (
                                 <Button onClick={() => navigate('/pessoas')}>
                                   {t('botaoVerMais')}
                                 </Button>
+                              )}
+                              {!isLoadingPessoas && totalCountPessoas === 0 && (
+                                <Typography>{t('nenhumaPessoaCadastrada')}</Typography>
                               )}
                             </Box>
                           </TableCell>
@@ -348,10 +351,13 @@ export const Dashboard = () => {
                             >
                               {cities}
                               <br />
-                              {!isLoadingCidades && (
+                              {!isLoadingCidades && totalCountCidades != 0 && (
                                 <Button onClick={() => navigate('/cidades')}>
                                   {t('botaoVerMais')}
                                 </Button>
+                              )}
+                              {!isLoadingCidades &&totalCountCidades === 0 && (
+                                <Typography>{t('nenhumaCidadeCadastrada')}</Typography>
                               )}
                             </Box>
                           </TableCell>

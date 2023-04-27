@@ -101,9 +101,8 @@
         "aSenhaPrecisaTerPeloMenosSeisCaracteres": "A senha é inválida, precisa ter pelo menos 6 caracteres",
         "usuarioNaoExiste": "Usuário não existe.",
         "jaExisteUmaContaComEsseEmail":"Já existi uma conta com o endereço de email fornecido.",
-        "jaExisteUmaContaParaEstaCredencial":"Já existe uma conta para esta credencial."
-
-
-
+        "jaExisteUmaContaParaEstaCredencial":"Já existe uma conta para esta credencial.",
+        "nenhumaPessoaCadastrada": "Nenhuma pessoa cadastrada!",
+        "nenhumaCidadeCadastrada": "Nenhuma Cidade cadastrada!"
     }
 }

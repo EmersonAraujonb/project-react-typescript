@@ -101,7 +101,9 @@
         "aSenhaPrecisaTerPeloMenosSeisCaracteres": "Password is invalid, must be at least 6 characters long",
         "usuarioNaoExiste": "User does not exist.",
         "jaExisteUmaContaComEsseEmail":"An account with the provided email address already existed.",
-        "jaExisteUmaContaParaEstaCredencial":"An account already exists for this credential."
+        "jaExisteUmaContaParaEstaCredencial":"An account already exists for this credential.",
+        "nenhumaPessoaCadastrada": "No person registered!",
+        "nenhumaCidadeCadastrada": "No city registered!"
 
 
 
