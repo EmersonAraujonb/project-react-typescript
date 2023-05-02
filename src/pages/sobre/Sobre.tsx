@@ -59,6 +59,7 @@ const Sobre = () => {
                   variant={smDown ? 'h6' : mdDown ? 'h4' : 'h4'}
                   align='center'
                   fontWeight={'400'}
+                  marginTop={4}
                 >
                   {t('missao')}
                 </Typography>
@@ -84,6 +85,8 @@ const Sobre = () => {
                   variant={smDown ? 'h6' : mdDown ? 'h4' : 'h4'}
                   align='center'
                   fontWeight={'400'}
+                  marginTop={4}
+
                 >
                   {t('crieSemMedo')}
                 </Typography>

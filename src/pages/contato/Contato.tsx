@@ -246,7 +246,7 @@ const Contato = () => {
                   boxShadow:'rgba(46, 240, 198, 0.4) 0px 5px, rgba(46, 217, 240, 0.3) 0px 10px, rgba(46, 217, 240, 0.2) 0px 15px, rgba(46, 227, 240, 0.1) 0px 20px, rgba(46, 240, 230, 0.05) 0px 25px;'
                 }}
               >
-                <Grid item sx={{ align: 'center' }} >
+                <Grid item sx={{ align: 'center', justifyContent: 'space-around' }} >
                   <Typography align='center' variant='body1'>
                     {t('sigaNos')}
                   </Typography>
@@ -259,7 +259,7 @@ const Contato = () => {
                     <IconButton>
                       <GitHubIcon
                         fontSize={smDown ? 'small' : 'large'}
-                        sx={{ color: '#000000', marginRight: 5 }}
+                        sx={{ color: '#000000' }}
                       />
                     </IconButton>
                   </Link>
@@ -271,7 +271,7 @@ const Contato = () => {
                     <IconButton>
                       <LinkedInIcon
                         fontSize={smDown ? 'small' : 'large'}
-                        sx={{ color: '#2600ff', marginRight: 5 }}
+                        sx={{ color: '#2600ff' }}
                       />
                     </IconButton>
                   </Link>
