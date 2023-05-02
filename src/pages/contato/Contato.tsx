@@ -23,7 +23,6 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import SendIcon from '@mui/icons-material/Send';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -264,14 +263,14 @@ const Contato = () => {
                     </IconButton>
                   </Link>
                   <Link
-                    href='https://www.linkedin.com/in/emerson-ara%C3%BAjo-584b6a227/'
+                    href='https://www.linkedin.com/in/dev-emerson-araujo/'
                     target='_blank'
                     title='Linkedin'
                   >
                     <IconButton>
                       <LinkedInIcon
                         fontSize={smDown ? 'small' : 'large'}
-                        sx={{ color: '#2600ff' }}
+                        sx={{ color: '#0059ff' }}
                       />
                     </IconButton>
                   </Link>
@@ -283,7 +282,19 @@ const Contato = () => {
                     <IconButton>
                       <TwitterIcon
                         fontSize={smDown ? 'small' : 'large'}
-                        sx={{ color: '#0059ff' }}
+                        sx={{ color: '#1da1f2' }}
+                      />
+                    </IconButton>
+                  </Link>
+                  <Link
+                    href='https://instagram.com/the_developerfrontend'
+                    target='_blank'
+                    title='Twitter'
+                  >
+                    <IconButton>
+                      <InstagramIcon
+                        fontSize={smDown ? 'small' : 'large'}
+                        sx={{ color: '#ff00ea' }}
                       />
                     </IconButton>
                   </Link>

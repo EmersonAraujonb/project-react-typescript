@@ -28,6 +28,7 @@ export const FerramentasDaListagem: React.FC<IBarraDeFerramentasProps> = ({
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const theme = useTheme();
+  
   return (
     <Box
       height={theme.spacing(5)}
@@ -45,7 +46,7 @@ export const FerramentasDaListagem: React.FC<IBarraDeFerramentasProps> = ({
           size="small"
           value={textoDaBusca}
           onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}
-          placeholder={Environment.INPUT_DE_BUSCA}
+          placeholder={Environment.INPUT_DE_BUSCA || undefined}
         />
       )}
       <Typography

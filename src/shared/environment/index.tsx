@@ -1,4 +1,6 @@
 const lang = sessionStorage.getItem('language');
+const alternateSearch = 'Search...';
+const alternateText = 'No records found.';
 
 export const Environment = {
   
@@ -10,19 +12,23 @@ export const Environment = {
    * Placeholder exibido nas inputs
    */
   
-  INPUT_DE_BUSCA: lang === 'pt'
-    ? 'Pesquisar...':
+  INPUT_DE_BUSCA: lang ?
     lang === 'us'
-      ? 'Search...'
-      : 'Rechercher...',
+      ? 'Search...':
+      lang === 'pt'
+        ? 'Pesquisar...'
+        : 'Rechercher...'
+    : alternateSearch,
   /**
    * Texto exibido quando nenhum registro é encontrado em uma listagem
    */
-  LISTAGEM_VAZIA:  lang === 'pt'
-    ? 'Nenhum registro encontrado.':
-    lang === 'us'
-      ? 'No records found.'
-      : 'Aucun enregistrement trouvé.',
+  LISTAGEM_VAZIA: lang ?   
+    lang === 'pt'
+      ? 'Nenhum registro encontrado.':
+      lang === 'us'
+        ? 'No records found.'
+        : 'Aucun enregistrement trouvé.'
+    : alternateText,
   /**
    * Url base de consulta dos dados dessa aplicação
    */
