@@ -98,7 +98,6 @@ export const AuthGoogleProvider: React.FC<IAuthGoogle> = ({ children }) => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        // console.log(error);
         if (errorCode == 'auth/email-already-in-use') {
           return setOpenError(t('jaExisteUmaContaComEsseEmail'));
         } else if (errorCode == 'auth/invalid-email') {

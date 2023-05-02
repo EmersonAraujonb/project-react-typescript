@@ -76,10 +76,6 @@ export const ListagemDePessoas: React.FC = () => {
         } else {
           setRows(result.data);
           setTotalCount(result.totalCount);
-          console.log('rows',rows);
-          console.log('result',result.totalCount);
-          console.log(busca);
-          console.log(pagina);
         }
       });
     });
